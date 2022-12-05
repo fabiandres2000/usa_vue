@@ -84,17 +84,41 @@
             </div>
         </div>
         
-        <b-modal id="modal-1" title="BootstrapVue">
-            <template>                
-                <h5>Modal Header</h5>
-            </template>
-            <template #modal-footer="{ ok, cancel }">
-                <b-button size="sm" variant="success" @click="ok()">
-                    Ingresar
-                </b-button>
-                <b-button size="sm" variant="danger" @click="cancel()">
-                    Cancelar
-                </b-button>
+        <b-modal id="modal-1" title="Iniciar sesión">
+            <form class="mb-3" @submit.prevent="login" method="post" ref="isesion" id="isesion">
+              <div class="mb-3">
+                <label for="email" class="form-label">Email o Usuario</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="usuario"
+                  name="usuario"
+                  placeholder="Email o Usuario"
+                  required
+                />
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label" for="password">Contraseña</label>
+                </div>
+                <div class="input-group input-group-merge">
+                  <input
+                    type="password"
+                    id="pass"
+                    class="form-control"
+                    name="pass"
+                    placeholder="*************"
+                    aria-describedby="password"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-warning d-grid w-100" type="submit">Ingresar</button>
+              </div>
+            </form>
+            <template #modal-footer>
+                <div></div>
             </template>
         </b-modal>
     </div>
@@ -102,12 +126,30 @@
 <style scoped src="@/assets/styles/login.css"></style>
 <script>
 import backgroundUrl from "../assets/banner_img.png";
+import * as userService from "../servicios/user.js"
+
 export default {
-    data() {
-        return {
-            backgroundUrl,
-        };
-    },
+  data() {
+      return {
+          backgroundUrl,
+      };
+  },
+  mounted() {
+    
+  },
+  methods: {
+    async login() {
+      const formData = new FormData(this.$refs['isesion']); 
+      const data = {};
+      for (let [key, val] of formData.entries()) {
+        Object.assign(data, { [key]: val })
+      }
+      console.log(data);
+      await userService.login(data).then(respuesta => {
+        console.log(respuesta);
+      });
+    }
+  },
 }
 </script>
 <style lang="">

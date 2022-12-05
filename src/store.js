@@ -8,8 +8,10 @@ export default new Vuex.Store({
         Sidebar_drawer: null,
         Customizer_drawer: false,
         SidebarColor: 'white',
-        SidebarBg: ''
-      },
+        SidebarBg: '',
+        apiURL: 'http://127.0.0.1:8000/',
+        serverPath: 'http://127.0.0.1:8000/',
+    },
     mutations: {
         SET_SIDEBAR_DRAWER (state, payload) {
             state.Sidebar_drawer = payload

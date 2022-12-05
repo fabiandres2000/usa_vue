@@ -144,9 +144,16 @@ export default {
       for (let [key, val] of formData.entries()) {
         Object.assign(data, { [key]: val })
       }
-      console.log(data);
       await userService.login(data).then(respuesta => {
-        console.log(respuesta);
+        if(respuesta.data.codigo == 1){
+          this.$session.start()
+          this.$session.set('usuario', respuesta.data.usuario[0].nombre)
+          this.$session.set('correo', respuesta.data.usuario[0].correo)
+          this.$session.set('foto', respuesta.data.usuario[0].foto)
+          this.$session.set('tipo', respuesta.data.usuario[0].tipo)
+        }else{
+          this.$swal('Error...', respuesta.data.respuesta, 'error');
+        }
       });
     }
   },

@@ -34,10 +34,12 @@ class UsuarioController extends Controller
             return response()->json([
                 'respuesta' => "Bienvenido",
                 'usuario' => $usuarios,
+                'codigo' => 1,
             ]);
         }else{
             return response()->json([
                 'respuesta' => "Usuario o contraseña Incorrectos.",
+                'codigo' => 0,
             ]);
         }
     }

@@ -14,14 +14,15 @@ export default new Router({
         },
         {   
             path: '/admin',
+            name: 'admin',
             component: () => import('@/layouts/Layout'),
             redirect: "/admin/dashboard/basic-dashboard",
             children: [
                 // Components
                 {
-                    name: 'Alerts',
-                    path: '/admin/pages/alerts',
-                    component: () => import('@/views/pages/Alerts'),
+                    name: 'RegistroPractica',
+                    path: '/admin/registro-practica',
+                    component: () => import('@/views/estudiante/registro_practica'),
                 },
 
                 {

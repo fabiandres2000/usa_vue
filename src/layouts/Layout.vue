@@ -32,6 +32,11 @@ export default {
   data: () => ({
     expandOnHover: false
   }),
+  beforeCreate: function () {
+    if (!this.$session.exists()) {
+      this.$router.push('/')
+    }
+  },
   computed: {
     ...mapState(["Customizer_drawer"])
   },
@@ -43,3 +48,12 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+  .container{
+    max-width: 1300px;
+  }
+
+  input[type=radio]{
+    transform:scale(1.8);
+  }
+</style>

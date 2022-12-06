@@ -15,41 +15,41 @@
       <!---USer Area -->
       <v-list-item two-line class="px-0">
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+          <img
+            v-if="imagen != null"
+            alt="Logo"
+            :src="
+                `${$store.state.serverPath}assets/perfiles/${imagen}`
+            "
+            width="70"
+            style="margin-left:5px;"
+          />
         </v-list-item-avatar>
-
         <v-list-item-content>
-          <v-list-item-title>Dohn Deo</v-list-item-title>
-          <v-list-item-subtitle class="caption">Webdesigner</v-list-item-subtitle>
+          <v-list-item-title>{{this.nombre}}</v-list-item-title>
+          <v-list-item-subtitle class="caption">{{this.correo}}</v-list-item-subtitle>
+          <v-list-item-subtitle class="caption">{{this.tipo}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <!---USer Area -->
       <!---Sidebar Items -->
-      <v-list-item
-        v-for="item in items"
-        :key="item.title"
-        :to="item.to"
-        :active-class="`success white--text`"
-        link
-      >
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <hr>
+      <sidebar-menu :menu="items" theme="white-theme"/>
       <!---Sidebar Items -->
     </v-list>
   </v-navigation-drawer>
 </template>
-
 <script>
+
 import { mapState } from "vuex";
+import { SidebarMenu } from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
 export default {
   name: "Sidebar",
+  components: {
+    SidebarMenu
+  },
   props: {
     expandOnHover: {
       type: Boolean,
@@ -57,37 +57,49 @@ export default {
     }
   },
   data: () => ({
+    
     items: [
       {
         title: "Dashboard",
-        icon: "mdi-view-dashboard",
-        to: "/admin/dashboard/basic-dashboard"
+        icon: "fa-solid fa-house",
+        href: "/admin/dashboard/basic-dashboard"
       },
-
       {
-        title: "Profile",
-        icon: "mdi-account-circle",
-        to: "/admin/pages/profile"
+        title: "Practicas",
+        icon: "fa-solid fa-person-digging",
+        href: "",
+        child: [
+              {
+                  href: '/admin/registro-practica',
+                  title: 'Registro'
+              },
+              {
+                  href: '/charts/sublink',
+                  title: 'Estado'
+              }
+          ]
       },
-
       {
-        title: "Alerts",
-        icon: "mdi-alert",
-        to: "/admin/pages/alerts"
+        title: "Caracterización",
+        icon: "fa-solid fa-person-circle-question",
+        href: "/admin/pages/icons"
       },
-
       {
-        title: "Icons",
-        icon: "mdi-emoticon",
-        to: "/admin/pages/icons"
+        title: "Test 1",
+        icon: "fa-solid fa-list-check",
+        href: "/admin/pages/alerts"
       },
-
       {
-        title: "Basic Table",
-        icon: "mdi-table-column-width",
-        to: "/admin/pages/tables-simple"
+        title: "Perfil",
+        icon: "fa-solid fa-user",
+        href: "/admin/pages/profile"
       }
-    ]
+    ],
+
+    imagen: "pic.png",
+    nombre: "",
+    correo: "",
+    tipo: "",
   }),
   computed: {
     ...mapState(["SidebarColor", "SidebarBg"]),
@@ -105,11 +117,24 @@ export default {
       this.$emit("update:expandOnHover", !val);
     }
   },
-
-  methods: {}
+  mounted() {
+    this.foto_perfil();
+  },
+  methods: {
+    async foto_perfil(){
+      this.imagen = this.$session.get("foto");
+      this.nombre = this.$session.get("usuario");
+      this.correo = this.$session.get("correo");
+      this.tipo = this.$session.get("tipo");
+    }
+  }
 };
 </script>
 <style lang="scss">
+.v-sidebar-menu{
+  height: 84%;
+  margin-top: 110px;
+}
 #main-sidebar{
   box-shadow:1px 0 20px rgba(0,0,0,.08);
   -webkit-box-shadow:1px 0 20px rgba(0,0,0,.08);
@@ -127,7 +152,10 @@ export default {
         width: 20px;
         
       }
-      
-  }    
+  }   
+  
+  .vsm--toggle-btn{
+    height: 67px !important;
+  }
 }
 </style>

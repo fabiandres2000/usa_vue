@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,5 @@ use App\Http\Controllers\UsuarioController;
 
 Route::get('/listar', [UsuarioController::class, 'listar']);
 Route::post('/login', [UsuarioController::class, 'login']);
+Route::post('/registro-usuario', [UsuarioController::class, 'registro_usuario']);
+Route::post('/recuperar-password', [UsuarioController::class, 'recuperar_password']);

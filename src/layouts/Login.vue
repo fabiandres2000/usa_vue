@@ -3,11 +3,11 @@
         <div id= "sub" :style="{ backgroundImage: `url(${backgroundUrl})` }">
             <div class="text-center p-4">
                 <b-navbar toggleable="lg" type="dark" variant="info" id="nav_index">
-                    <img src="../assets/logo.png" alt="" width="16%">
+                    <img src="../assets/logo2.png" alt="" width="16%">
                     <b-collapse id="nav-collapse" is-nav>
                         <!-- Right aligned nav items -->
                         <b-navbar-nav class="ml-auto">
-                            <b-button variant="warning" v-b-modal.modal-1>Recuperar Contraseña</b-button>
+                            <b-button variant="warning" v-b-modal.modal-rc>Recuperar Contraseña</b-button>
                             <div style="width: 20px"></div>
                             <b-button variant="primary" v-b-modal.modal-1>Iniciar sesión</b-button>
                         </b-navbar-nav>
@@ -20,7 +20,7 @@
                 <h2 style="color: #d4a81e;">Escuela de Comunicación, Periodismo y Psicología <br> Programa de Psicología</h2>
                 <div class="card">
                   <div class="d-flex align-items-end p-2">
-                    <form action="../php/verificar.php" id="form_init" method="post">
+                    <form @submit.prevent="registro_estudiante" method="post" ref="form_init" id="form_init">
                       <div class="row" style="width: 100%; text-align: left; padding-left: 40px; padding-right: 40px;">
                             <div class="col-lg-12">
                               <h3 style="font-weight: bold; color: #2C4A73;">Cordial saludo,</h3>  
@@ -121,6 +121,30 @@
                 <div></div>
             </template>
         </b-modal>
+
+        <b-modal id="modal-rc" title="Recuperar Contraseña">
+            <h4 class="mb-2">Has olvidado tu contraseña? 🔒</h4>
+            <p class="mb-4">Ingrese su correo electrónico y le enviaremos instrucciones para restablecer su contraseña.</p>
+            <form class="mb-3" @submit.prevent="recuperar_clave" method="post" ref="form_cambio_pass" id="form_cambio_pass">
+              <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="correo"
+                    name="correo"
+                    placeholder="Ingrese su correo electrónico"
+                    autofocus
+                  />
+                </div>
+              <div class="mb-3">
+                <button class="btn btn-warning d-grid w-100" type="submit">Ingresar</button>
+              </div>
+            </form>
+            <template #modal-footer>
+                <div></div>
+            </template>
+        </b-modal>
     </div>
 </template>
 <style scoped src="@/assets/styles/login.css"></style>
@@ -131,7 +155,7 @@ import * as userService from "../servicios/user.js"
 export default {
   data() {
       return {
-          backgroundUrl,
+        backgroundUrl,
       };
   },
   mounted() {
@@ -151,6 +175,37 @@ export default {
           this.$session.set('correo', respuesta.data.usuario[0].correo)
           this.$session.set('foto', respuesta.data.usuario[0].foto)
           this.$session.set('tipo', respuesta.data.usuario[0].tipo)
+
+          this.$router.push({ name: 'admin' })
+        }else{
+          this.$swal('Error...', respuesta.data.respuesta, 'error');
+        }
+      });
+    },
+    async registro_estudiante() {
+      const formData = new FormData(this.$refs['form_init']); 
+      const data = {};
+      for (let [key, val] of formData.entries()) {
+        Object.assign(data, { [key]: val })
+      }
+      Object.assign(data, { "tipo_registro": "Estudiante" })
+      await userService.registro_usuario(data).then(respuesta => {
+        if(respuesta.data.codigo == 1){
+          this.$swal('Error...', respuesta.data.respuesta, 'success');
+        }else{
+          this.$swal('Error...', respuesta.data.respuesta, 'error');
+        }
+      });
+    },
+    async recuperar_clave() {
+      const formData = new FormData(this.$refs['form_cambio_pass']); 
+      const data = {};
+      for (let [key, val] of formData.entries()) {
+        Object.assign(data, { [key]: val })
+      }
+      await userService.recuperar_clave(data).then(respuesta => {
+        if(respuesta.data.codigo == 1){
+          this.$swal('Error...', respuesta.data.respuesta, 'success');
         }else{
           this.$swal('Error...', respuesta.data.respuesta, 'error');
         }

@@ -11,6 +11,8 @@ export default new Vuex.Store({
         SidebarBg: '',
         apiURL: 'http://127.0.0.1:8000/',
         serverPath: 'http://127.0.0.1:8000/',
+        //apiURL: 'https://usa-vue.institutocolombianodepsicometria.com/back_usa/public/',
+        //serverPath: 'https://usa-vue.institutocolombianodepsicometria.com/back_usa/public/',
     },
     mutations: {
         SET_SIDEBAR_DRAWER (state, payload) {

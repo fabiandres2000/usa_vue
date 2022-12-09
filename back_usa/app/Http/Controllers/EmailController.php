@@ -220,7 +220,7 @@ class EmailController extends Controller
             <br>
             <br>
             <h4 style='text-align:justify;'>
-            De antemano agradecemos la confianza depositada en nosotros.
+                De antemano agradecemos la confianza depositada en nosotros.
             </h4>
             <br>
             <hr>
@@ -228,7 +228,7 @@ class EmailController extends Controller
             Atentamente: <br> 
             Universidad Sergio Arboleda.<br>
             Correo: usa@usa.edu.co.<br> 
-            Celular (Whatsapp): 3012990890.<br> 
+            Celular (Whatsapp): 000-000-0000.<br> 
         </h5>
         </div>
         </div>

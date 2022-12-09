@@ -57,8 +57,8 @@ export default {
     }
   },
   data: () => ({
-    
-    items: [
+    items:[],
+    itemsEstudiante: [
       {
         title: "Dashboard",
         icon: "fa-solid fa-house",
@@ -95,7 +95,40 @@ export default {
         href: "/admin/pages/profile"
       }
     ],
-
+    itemsPracticas: [
+      {
+        title: "Convenios",
+        icon: "fa-solid fa-handshake",
+        href: "/practicas/convenios"
+      },
+      {
+        title: "Tutores SP",
+        icon: "fa-solid fa-person-chalkboard",
+        href: "/admin/asignar-permiso"
+      },
+      {
+        title: "Tutores USA",
+        icon: "fa-solid fa-person-chalkboard",
+        href: "/admin/asignar-permiso"
+      },
+      {
+        title: "Asig. de practicantes",
+        icon: "fa-solid fa-user-tag",
+        href: "/admin/asignar-permiso"
+      },
+      {
+        title: "Asig. fecha máxima",
+        icon: "fa-solid fa-calendar-day",
+        href: "/admin/asignar-permiso"
+      },
+    ],
+    itemDecanatura:[
+      {
+        title: "Permisos",
+        icon: "fa-solid fa-unlock-keyhole",
+        href: "/admin/asignar-permiso"
+      },
+    ],
     imagen: "pic.png",
     nombre: "",
     correo: "",
@@ -126,6 +159,20 @@ export default {
       this.nombre = this.$session.get("usuario");
       this.correo = this.$session.get("correo");
       this.tipo = this.$session.get("tipo");
+
+      switch (this.tipo) {
+        case "Decanatura":
+          this.items = this.itemDecanatura;
+        break;
+        case "Estudiante":
+          this.items = this.itemsEstudiante;
+        break;
+        case "Practicas":
+          this.items = this.itemsPracticas;
+        break;
+        default:
+        break;
+      }
     }
   }
 };

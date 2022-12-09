@@ -142,4 +142,47 @@ class UsuarioController extends Controller
         }
 
     }
+
+    public function asignar_permiso(){
+        $data = request()->all();
+        $password = Hash::make(Str::random(8));
+
+        $usuarios = DB::connection("mysql")
+        ->table("usuario")
+        ->where("correo", $data["correo"])
+        ->select("*")
+        ->get();
+
+        if(count($usuarios) != 0){
+            return response()->json([
+                'respuesta' => "Existe un usuaio registrado con ese correo.",
+                'codigo' => 0,
+            ]);
+        }else{
+            $insert = DB::connection("mysql")
+            ->table("usuario")
+            ->insert([
+                'correo' => $data["correo"],
+                'password' =>md5($password),
+                'nombre' => $data["nombre"],
+                'foto'=> "pic.png",
+                'tipo'=> $data["tipo_registro"],
+            ]);
+        }
+
+        if($insert){
+            $objeto = new EmailController();
+            $objeto->enviar_correo($data["correo"], $data["nombre"], $password, "Permiso a modulo (".$data["tipo_registro"].") asignado");
+
+            return response()->json([
+                'respuesta' => "Permiso asignado correctamente!",
+                'codigo' => 1,
+            ]);
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+    }
 }

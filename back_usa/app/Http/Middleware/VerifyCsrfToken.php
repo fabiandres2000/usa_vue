@@ -15,6 +15,9 @@ class VerifyCsrfToken extends Middleware
         '/login',
         '/enviar-correo',
         '/registro-usuario',
-        '/recuperar-password'
+        '/recuperar-password',
+        '/asignar-permiso',
+        '/registrar-convenio',
+        '/editar-convenio'
     ];
 }

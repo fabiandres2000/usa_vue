@@ -6,7 +6,7 @@
             <v-card-text class="text-left p-5">
                 <h1 style="color: #2c4a73; font-weight: bold">Registro de Practicas</h1>
                 <hr>
-                <form action="php/registro_practicas.php" method="post" id="form_registro_practica">
+                <form method="post" id="form_registro_practica">
                     <div class="row">
                         <div class="col-lg-12">
                             <input placeholder="Nombres y Apellidos" type="text"  class="form-control" id="nombre" name="nombre">

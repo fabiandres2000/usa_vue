@@ -84,7 +84,7 @@
             </div>
         </div>
         
-        <b-modal id="modal-1" title="Iniciar sesión">
+        <b-modal id="modal-1" title="Iniciar sesión" hide-footer>
             <form class="mb-3" @submit.prevent="login" method="post" ref="isesion" id="isesion">
               <div class="mb-3">
                 <label for="email" class="form-label">Email o Usuario</label>
@@ -117,12 +117,9 @@
                 <button class="btn btn-warning d-grid w-100" type="submit">Ingresar</button>
               </div>
             </form>
-            <template #modal-footer>
-                <div></div>
-            </template>
         </b-modal>
 
-        <b-modal id="modal-rc" title="Recuperar Contraseña">
+        <b-modal id="modal-rc" title="Recuperar Contraseña" hide-footer>
             <h4 class="mb-2">Has olvidado tu contraseña? 🔒</h4>
             <p class="mb-4">Ingrese su correo electrónico y le enviaremos instrucciones para restablecer su contraseña.</p>
             <form class="mb-3" @submit.prevent="recuperar_clave" method="post" ref="form_cambio_pass" id="form_cambio_pass">
@@ -141,9 +138,6 @@
                 <button class="btn btn-warning d-grid w-100" type="submit">Ingresar</button>
               </div>
             </form>
-            <template #modal-footer>
-                <div></div>
-            </template>
         </b-modal>
     </div>
 </template>

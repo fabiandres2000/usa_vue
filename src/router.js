@@ -49,6 +49,17 @@ export default new Router({
                     component: () => import('@/views/dashboard/BasicDashboard'),
                 },
 
+                {
+                    name: 'AsignarPermiso',
+                    path: '/admin/asignar-permiso',
+                    component: () => import('@/views/decanatura/asignarPermiso'),
+                },
+
+                {
+                    name: 'Convenios',
+                    path: '/practicas/convenios',
+                    component: () => import('@/views/practicas/convenios'),
+                },
             ]
         },
     ],

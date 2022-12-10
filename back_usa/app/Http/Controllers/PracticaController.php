@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use File;
+use App\Http\Controllers\EmailController;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class PracticaController extends Controller
 {
@@ -44,7 +47,7 @@ class PracticaController extends Controller
  
         $insert = DB::connection("mysql")
         ->table("convenio")
-        ->insertGetId([
+        ->insert([
             'nit' => $data["nit"],
             'razon_social' => $data["razon_social"],
             'direccion'=> $data["direccion"],
@@ -158,4 +161,192 @@ class PracticaController extends Controller
         }
 
     }
+
+    #region tutores
+    public function listar_tutores_usa(){
+        $tutores = DB::connection("mysql")
+        ->table("tutor_usa")
+        ->select("*")
+        ->get();
+
+        return response()->json([
+            'tutores' => $tutores,
+        ]);
+    }
+
+    public function registrar_tutor_usa(){
+        $data = request()->all();
+        $password = Hash::make(Str::random(8));
+
+        $usuarios = DB::connection("mysql")
+        ->table("usuario")
+        ->where("correo", $data["correo"])
+        ->select("*")
+        ->get();
+
+        if(count($usuarios) != 0){
+            return response()->json([
+                'respuesta' => "Existe un usuaio registrado con ese correo.",
+                'codigo' => 0,
+            ]);
+        }else{
+
+            $documento_tmp1 = $data['documento_contrato']; 
+            if ($documento_tmp1->isValid()) {    
+                $filename1 = 'documento' . date('Y_m_d_h_i_s_A').".".$documento_tmp1->getClientOriginalExtension();
+            }else{
+                $filename1 = "NADA";
+            }
+        
+            $insert = DB::connection("mysql")
+            ->table("tutor_usa")
+            ->insert([
+                'nombres' => $data["nombres"],
+                'apellidos' => $data["apellidos"],
+                'correo'=> $data["correo"],
+                'celular'=> $data["celular"],
+                'cedula'=> $data["cedula"],
+                'campo'=> $data["campo"],
+                'fecha'=> $data["fecha"],
+                'documento_contrato'=> $filename1,
+            ]);
+    
+            if($insert){
+                  
+                if ($documento_tmp1->isValid()) {    
+                    $documento_tmp1->move(public_path().'/contratos_tutores_usa/', $filename1);
+                }
+                
+                DB::connection("mysql")
+                ->table("usuario")
+                ->insert([
+                    'correo' => $data["correo"],
+                    'password' =>md5($password),
+                    'nombre' => $data["nombres"]." ".$data["apellidos"],
+                    'foto'=> "pic.png",
+                    'tipo'=> "Tutor USA",
+                ]);
+
+                $objeto = new EmailController();
+                $objeto->enviar_correo($data["correo"], $data["nombres"]." ".$data["apellidos"], $password, "Registro Tutor USA");
+
+                return response()->json([
+                    'respuesta' => "Tutor Registrado Correctamente!",
+                    'codigo' => 1,
+                ]);
+    
+            }else{
+                return response()->json([
+                    'respuesta' => "Ocurrio un error, intente mas tarde.",
+                    'codigo' => 0,
+                ]);
+            }
+
+           
+        }
+    }
+
+    public function editar_tutor_usa()
+    {
+        $data = request()->all();
+        
+        File::delete(public_path('contratos_tutores_usa/'.$data['documento_contrato_viejo']));
+
+        $documento_tmp1 = $data['documento_contrato']; 
+        if ($documento_tmp1->isValid()) {    
+            $filename1 = 'documento' . date('Y_m_d_h_i_s_A').".".$documento_tmp1->getClientOriginalExtension();
+        }else{
+            $filename1 = "NADA";
+        }
+       
+        $tutor_viejo = DB::connection("mysql")
+        ->table("tutor_usa")
+        ->where("id", $data["id"])
+        ->select("*")
+        ->first();
+ 
+        $update = DB::connection("mysql")
+        ->table("tutor_usa")
+        ->where("id", $data['id'])
+        ->update([
+            'nombres' => $data["nombres"],
+            'apellidos' => $data["apellidos"],
+            'correo'=> $data["correo"],
+            'celular'=> $data["celular"],
+            'cedula'=> $data["cedula"],
+            'campo'=> $data["campo"],
+            'fecha'=> $data["fecha"],
+            'documento_contrato'=> $filename1,
+        ]);
+
+        if($update){
+                
+            if ($documento_tmp1->isValid()) {    
+                $documento_tmp1->move(public_path().'/contratos_tutores_usa/', $filename1);
+            }
+
+            DB::connection("mysql")
+            ->table("usuario")
+            ->where("correo", $tutor_viejo->correo)
+            ->update([
+                'correo' => $data["correo"],
+                'nombre' => $data["nombres"]." ".$data["apellidos"],
+            ]);
+
+            return response()->json([
+                'respuesta' => "Tutor Modificado Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+
+    }
+
+    public function cambiar_estado_tutor_usa()
+    {
+        $data = request()->all();
+        
+        $tutor = DB::connection("mysql")
+        ->table("tutor_usa")
+        ->where("id", $data["id"])
+        ->select("*")
+        ->first();
+
+        if($tutor->estado == 1){
+            $update = DB::connection("mysql")
+            ->table("tutor_usa")
+            ->where("id", $data['id'])
+            ->update([
+                'estado' => '0',
+            ]);
+        }else{
+            $update = DB::connection("mysql")
+            ->table("tutor_usa")
+            ->where("id", $data['id'])
+            ->update([
+                'estado' => '1',
+            ]);
+        }
+
+        if($update){
+           
+            return response()->json([
+                'respuesta' => "Estado Actualizado Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+
+    }
+    #endregion tutores
 }

@@ -109,7 +109,7 @@ export default {
       {
         title: "Tutores USA",
         icon: "fa-solid fa-person-chalkboard",
-        href: "/admin/asignar-permiso"
+        href: "/practicas/tutor-usa"
       },
       {
         title: "Asig. de practicantes",

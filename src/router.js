@@ -60,6 +60,12 @@ export default new Router({
                     path: '/practicas/convenios',
                     component: () => import('@/views/practicas/convenios'),
                 },
+
+                {
+                    name: 'Convenios',
+                    path: '/practicas/tutor-usa',
+                    component: () => import('@/views/practicas/tutor_usa'),
+                },
             ]
         },
     ],

@@ -47,7 +47,7 @@ CREATE TABLE `convenio` (
 
 LOCK TABLES `convenio` WRITE;
 /*!40000 ALTER TABLE `convenio` DISABLE KEYS */;
-INSERT INTO `convenio` VALUES (1,'Centro Comercial Guatapuri','1344234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_02_08_PM.pdf','2022-12-09','2022-12-17','Si','Si','Si','No','No','1'),(2,'Mayales Plaza','134423443234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_05_12_PM.pdf','2022-12-16','2022-12-24','No','No','Si','No','Si','1'),(3,'UPC','546546456','MZ 2 CASA 8 TAYRONA','Fabian Quintero Mendez','documento2022_12_09_10_33_23_PM.pdf','2022-11-27','2022-12-10','Si','No','No','Si','No','1'),(4,'ICBF','7567567567','Barrio Centro','Cristian Quintero','documento2022_12_09_10_34_40_PM.pdf','2022-12-01','2022-12-08','Si','Si','Si','Si','Si','1');
+INSERT INTO `convenio` VALUES (1,'Centro Comercial Guatapuri','1344234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_02_08_PM.pdf','2022-12-09','2022-12-17','Si','Si','Si','No','No','1'),(2,'Mayales Plaza','134423443234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_05_12_PM.pdf','2022-12-16','2022-12-24','No','No','Si','No','Si','1'),(3,'Universidad Sergio Arboleda','546546456','MZ 2 CASA 8 TAYRONA','Fabian Quintero Mendez','documento2022_12_09_10_53_58_PM.pdf','2022-11-27','2022-12-10','Si','No','No','Si','No','1'),(4,'ICBF','7567567567','Barrio Centro','Cristian Quintero','documento2022_12_09_10_34_40_PM.pdf','2022-12-01','2022-12-08','Si','Si','Si','Si','Si','1');
 /*!40000 ALTER TABLE `convenio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,6 +205,38 @@ LOCK TABLES `sociodemografico` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tutor_usa`
+--
+
+DROP TABLE IF EXISTS `tutor_usa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tutor_usa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(400) DEFAULT NULL,
+  `apellidos` varchar(400) DEFAULT NULL,
+  `correo` varchar(400) DEFAULT NULL,
+  `celular` varchar(400) DEFAULT NULL,
+  `cedula` varchar(400) DEFAULT NULL,
+  `campo` varchar(400) DEFAULT NULL,
+  `fecha` varchar(400) DEFAULT NULL,
+  `documento_contrato` varchar(400) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tutor_usa`
+--
+
+LOCK TABLES `tutor_usa` WRITE;
+/*!40000 ALTER TABLE `tutor_usa` DISABLE KEYS */;
+INSERT INTO `tutor_usa` VALUES (2,'fabian','del carmen','tutor_usa_1@usa.edu.co','3042065930','3242134123','Campo Educativo','2022-II','documento2022_12_10_04_18_39_PM.pdf','1'),(3,'Blanca','Quintero Mendez','tutor_usa_2@usa.edu.co','3042065930','567567457','Campo Organizacional','2022-II','documento2022_12_10_03_10_36_PM.pdf','0'),(4,'Andres','Mendoza Lopez','tutor_usa_3@usa.edu.co','3020659334','67457457','Campo clinico y salud','2022-I','documento2022_12_10_04_18_27_PM.pdf','1');
+/*!40000 ALTER TABLE `tutor_usa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -220,7 +252,7 @@ CREATE TABLE `usuario` (
   `tipo` varchar(405) DEFAULT NULL,
   `id_estudiante` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +261,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin','admin@usa.edu.co','ee61e766467546320854c3446ccde3d4','pic.png','Decanatura',NULL),(19,'Andres Quintero','grovveip@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','2'),(20,'Andres Quintero 2','grovveip2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','3'),(21,'Andres Quintero 3','grovveip3@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','4'),(22,'Andres Quintero 4','grovveip4@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','5'),(23,'Andres Quintero 5','grovveip5@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','6'),(24,'Andres Quintero 6','grovveip6@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','7'),(25,'Andres Quintero 7','grovveip7@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','8'),(26,'Andres Quintero 8','grovveip8@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','9'),(27,'Andres Quintero 9','grovveip9@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','10'),(31,'Fabian Quintero','practicas@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Practicas',NULL);
+INSERT INTO `usuario` VALUES (1,'Admin','admin@usa.edu.co','ee61e766467546320854c3446ccde3d4','pic.png','Decanatura',NULL),(19,'Andres Quintero','grovveip@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','2'),(20,'Andres Quintero 2','grovveip2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','3'),(21,'Andres Quintero 3','grovveip3@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','4'),(22,'Andres Quintero 4','grovveip4@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','5'),(23,'Andres Quintero 5','grovveip5@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','6'),(24,'Andres Quintero 6','grovveip6@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','7'),(25,'Andres Quintero 7','grovveip7@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','8'),(26,'Andres Quintero 8','grovveip8@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','9'),(27,'Andres Quintero 9','grovveip9@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','10'),(31,'Fabian Quintero','practicas@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Practicas',NULL),(33,'fabian del carmen','tutor_usa_1@usa.edu.co','9d5aae505f7a3df3741a3f6fc388e4bb','pic.png','Tutor USA',NULL),(34,'Blanca Quintero Mendez','tutor_usa_2@usa.edu.co','8c319cddaedbabb0d2737b08c042bc25','pic.png','Tutor USA',NULL),(35,'Andres Mendoza Lopez','tutor_usa_3@usa.edu.co','b1255b4c3590bd939a532f1f7a612cc0','pic.png','Tutor USA',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -242,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-09 17:52:01
+-- Dump completed on 2022-12-10 11:46:35

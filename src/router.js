@@ -62,9 +62,15 @@ export default new Router({
                 },
 
                 {
-                    name: 'Convenios',
+                    name: 'Tutores USA',
                     path: '/practicas/tutor-usa',
                     component: () => import('@/views/practicas/tutor_usa'),
+                },
+
+                {
+                    name: 'Tutores SP',
+                    path: '/practicas/tutor-sp',
+                    component: () => import('@/views/practicas/tutor_sp'),
                 },
             ]
         },

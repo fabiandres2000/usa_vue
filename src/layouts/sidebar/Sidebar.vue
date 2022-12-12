@@ -104,7 +104,7 @@ export default {
       {
         title: "Tutores SP",
         icon: "fa-solid fa-person-chalkboard",
-        href: "/admin/asignar-permiso"
+        href: "/practicas/tutor-sp"
       },
       {
         title: "Tutores USA",

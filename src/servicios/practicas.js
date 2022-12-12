@@ -63,3 +63,15 @@ export function editar_tutor_usa($data) {
 export function eliminar_tutuor_usa($id) {
     return http().get('/cambiar-estado-tutor-usa?id='+$id);
 }
+
+export function listar_tutores_sp() {
+    return http().get('/tutores-sp');
+}
+
+export function registrar_tutor_sp($data) {
+    return http().post('/registrar-tutor-sp', $data);
+}
+
+export function editar_tutor_sp($data) {
+    return http().post('/editar-tutor-sp', $data);
+}

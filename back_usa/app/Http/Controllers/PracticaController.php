@@ -348,5 +348,126 @@ class PracticaController extends Controller
         }
 
     }
+
+    public function listar_tutores_sp(){
+        $tutores = DB::connection("mysql")
+        ->table("tutor_sp")
+        ->join("convenio","convenio.id","tutor_sp.id_convenio")
+        ->select("tutor_sp.*","convenio.razon_social")
+        ->get();
+
+        return response()->json([
+            'tutores' => $tutores,
+        ]);
+    }
+
+    public function registrar_tutor_sp(){
+        $data = request()->all();
+        $password = Hash::make(Str::random(8));
+
+        $usuarios = DB::connection("mysql")
+        ->table("usuario")
+        ->where("correo", $data["correo"])
+        ->select("*")
+        ->get();
+
+        if(count($usuarios) != 0){
+            return response()->json([
+                'respuesta' => "Existe un usuaio registrado con ese correo.",
+                'codigo' => 0,
+            ]);
+        }else{
+
+            $insert = DB::connection("mysql")
+            ->table("tutor_sp")
+            ->insert([
+                'nombres' => $data["nombres"],
+                'apellidos' => $data["apellidos"],
+                'correo'=> $data["correo"],
+                'celular'=> $data["celular"],
+                'cedula'=> $data["cedula"],
+                'campo'=> $data["campo"],
+                'fecha'=> $data["fecha"],
+                'id_convenio'=> $data["convenio"],
+            ]);
+    
+            if($insert){
+             
+                DB::connection("mysql")
+                ->table("usuario")
+                ->insert([
+                    'correo' => $data["correo"],
+                    'password' =>md5($password),
+                    'nombre' => $data["nombres"]." ".$data["apellidos"],
+                    'foto'=> "pic.png",
+                    'tipo'=> "Tutor SP",
+                ]);
+
+                $objeto = new EmailController();
+                $objeto->enviar_correo($data["correo"], $data["nombres"]." ".$data["apellidos"], $password, "Registro Tutor SP");
+
+                return response()->json([
+                    'respuesta' => "Tutor Registrado Correctamente!",
+                    'codigo' => 1,
+                ]);
+    
+            }else{
+                return response()->json([
+                    'respuesta' => "Ocurrio un error, intente mas tarde.",
+                    'codigo' => 0,
+                ]);
+            }
+
+           
+        }
+    }
+
+    public function editar_tutor_sp()
+    {
+        $data = request()->all();
+       
+        $tutor_viejo = DB::connection("mysql")
+        ->table("tutor_sp")
+        ->where("id", $data["id"])
+        ->select("*")
+        ->first();
+ 
+        $update = DB::connection("mysql")
+        ->table("tutor_sp")
+        ->where("id", $data['id'])
+        ->update([
+            'nombres' => $data["nombres"],
+            'apellidos' => $data["apellidos"],
+            'correo'=> $data["correo"],
+            'celular'=> $data["celular"],
+            'cedula'=> $data["cedula"],
+            'campo'=> $data["campo"],
+            'fecha'=> $data["fecha"],
+            'id_convenio'=> $data["convenio"],
+        ]);
+
+        if($update){
+                
+            DB::connection("mysql")
+            ->table("usuario")
+            ->where("correo", $tutor_viejo->correo)
+            ->update([
+                'correo' => $data["correo"],
+                'nombre' => $data["nombres"]." ".$data["apellidos"],
+            ]);
+
+            return response()->json([
+                'respuesta' => "Tutor Modificado Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+
+    }
     #endregion tutores
 }

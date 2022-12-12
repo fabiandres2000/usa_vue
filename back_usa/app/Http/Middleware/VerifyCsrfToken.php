@@ -20,6 +20,8 @@ class VerifyCsrfToken extends Middleware
         '/registrar-convenio',
         '/editar-convenio',
         '/registrar-tutor-usa',
-        '/editar-tutor-usa'
+        '/editar-tutor-usa',
+        '/registrar-tutor-sp',
+        '/editar-tutor-sp'
     ];
 }

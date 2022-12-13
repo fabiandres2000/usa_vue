@@ -469,5 +469,47 @@ class PracticaController extends Controller
         }
 
     }
+
+    public function cambiar_estado_tutor_sp()
+    {
+        $data = request()->all();
+        
+        $tutor = DB::connection("mysql")
+        ->table("tutor_sp")
+        ->where("id", $data["id"])
+        ->select("*")
+        ->first();
+
+        if($tutor->estado == 1){
+            $update = DB::connection("mysql")
+            ->table("tutor_sp")
+            ->where("id", $data['id'])
+            ->update([
+                'estado' => '0',
+            ]);
+        }else{
+            $update = DB::connection("mysql")
+            ->table("tutor_sp")
+            ->where("id", $data['id'])
+            ->update([
+                'estado' => '1',
+            ]);
+        }
+
+        if($update){
+           
+            return response()->json([
+                'respuesta' => "Estado Actualizado Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+
+    }
     #endregion tutores
 }

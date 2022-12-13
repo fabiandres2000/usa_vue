@@ -72,6 +72,12 @@ export default new Router({
                     path: '/practicas/tutor-sp',
                     component: () => import('@/views/practicas/tutor_sp'),
                 },
+
+                {
+                    name: 'Asignaciones',
+                    path: '/practicas/asignaciones',
+                    component: () => import('@/views/practicas/AdminAsignaciones'),
+                },
             ]
         },
     ],

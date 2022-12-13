@@ -35,3 +35,4 @@ Route::get('/cambiar-estado-tutor-usa', [PracticaController::class, 'cambiar_est
 Route::get('/tutores-sp', [PracticaController::class, 'listar_tutores_sp']);
 Route::post('/registrar-tutor-sp', [PracticaController::class, 'registrar_tutor_sp']);
 Route::post('/editar-tutor-sp', [PracticaController::class, 'editar_tutor_sp']);
+Route::get('/cambiar-estado-tutor-sp', [PracticaController::class, 'cambiar_estado_tutor_sp']);

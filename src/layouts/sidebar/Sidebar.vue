@@ -114,12 +114,12 @@ export default {
       {
         title: "Asig. de practicantes",
         icon: "fa-solid fa-user-tag",
-        href: "/admin/asignar-permiso"
+        href: "/practicas/asignaciones"
       },
       {
         title: "Asig. fecha máxima",
         icon: "fa-solid fa-calendar-day",
-        href: "/admin/asignar-permiso"
+        href: "/admin/asignar-permiso2"
       },
     ],
     itemDecanatura:[

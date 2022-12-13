@@ -35,7 +35,7 @@
                     <td>{{item.campo}}</td>
                     <td>{{item.fecha}}</td>
                     <td>{{item.razon_social}}</td>
-                    <td style="text-align: center"><button @click="cambiar_estado_tutor_usa(item.id)" :class="item.estado == '0' ? 'btn btn-success' : 'btn btn-danger'"><i :class="item.estado == '1' ? 'fa-sharp fa-solid fa-trash': 'fa-solid fa-circle-check'"></i></button> <button  @click="abrir_modal_editar_tutor_usa(item)" class="btn btn-info"><i class="fa-solid fa-pen"></i></button></td>
+                    <td style="text-align: center"><button @click="cambiar_estado_tutor_sp(item.id)" :class="item.estado == '0' ? 'btn btn-success' : 'btn btn-danger'"><i :class="item.estado == '1' ? 'fa-sharp fa-solid fa-trash': 'fa-solid fa-circle-check'"></i></button> <button  @click="abrir_modal_editar_tutor_sp(item)" class="btn btn-info"><i class="fa-solid fa-pen"></i></button></td>
                   </tr>
                 </tbody>
               </table>
@@ -157,7 +157,13 @@
             $("#tabla-tsp").dataTable().fnDestroy();
             setTimeout(() => {
             $('#tabla-tsp').DataTable({
-                language: {
+              "scrollX": true,
+              columnDefs: [{
+                  width: "160px",
+                  targets: 8
+                },
+              ],
+              language: {
                 "decimal": "",
                 "emptyTable": "No hay información",
                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
@@ -171,14 +177,14 @@
                 "search": "Buscar:",
                 "zeroRecords": "Sin resultados encontrados",
                 "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+                  "first": "Primero",
+                  "last": "Ultimo",
+                  "next": "Siguiente",
+                  "previous": "Anterior"
                 }
-                }
+              }
             });
-            }, 100);
+          }, 100);
         },
         mostrarPDFTUSA(ruta){
             this.rutaPdf = store.state.apiURL+"contratos_tutores_usa/"+ ruta;
@@ -221,13 +227,13 @@
             }
             
         },
-        abrir_modal_editar_tutor_usa(item){
+        abrir_modal_editar_tutor_sp(item){
             this.opcion = "editar";
             this.titulo_rc = "Editar tutor registrado";
             this.$refs['modal-tsp'].show();
             this.item_editar = item;
         },
-        async cambiar_estado_tutor_usa(id){
+        async cambiar_estado_tutor_sp(id){
             this.$swal({
             title: '¿Esta seguro de cambiar el estado a este tutor?',
             type: 'warning',
@@ -238,14 +244,14 @@
             showLoaderOnConfirm: true
             }).then((result) => {
             if(result.value) {
-                this.cambiar_estado_tutor_usa_ok(id);
+                this.cambiar_estado_tutor_sp_ok(id);
             } else {
                 console.log("cancelado");
             }
             });
         },
-        async cambiar_estado_tutor_usa_ok(id){
-            await practicasService.eliminar_tutuor_usa(id).then(respuesta => {
+        async cambiar_estado_tutor_sp_ok(id){
+            await practicasService.cambiar_estado_tutor_sp(id).then(respuesta => {
             if(respuesta.data.codigo == 1){
                 this.$swal('Correcto...', respuesta.data.respuesta, 'success');
                 this.listar_tutores_sp();

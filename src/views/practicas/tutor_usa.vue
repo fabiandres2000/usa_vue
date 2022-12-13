@@ -179,6 +179,12 @@
         $("#tabla-tusa").dataTable().fnDestroy();
         setTimeout(() => {
           $('#tabla-tusa').DataTable({
+            "scrollX": true,
+            columnDefs: [{
+                width: "160px",
+                targets: 8
+              },
+            ],
             language: {
               "decimal": "",
               "emptyTable": "No hay información",

@@ -280,7 +280,7 @@ export default {
             }
           }
         });
-      }, 200);
+      }, 100);
     },
     mostrarPDF(ruta){
       this.rutaPdf = store.state.apiURL+"documentos_convenios/"+ ruta;

@@ -264,7 +264,7 @@ CREATE TABLE `tutor_usa` (
 
 LOCK TABLES `tutor_usa` WRITE;
 /*!40000 ALTER TABLE `tutor_usa` DISABLE KEYS */;
-INSERT INTO `tutor_usa` VALUES (2,'fabian','del carmen','tutor_usa_1@usa.edu.co','3042065930','3242134123','Campo Educativo','2022-II','documento2022_12_10_04_18_39_PM.pdf','1'),(3,'Blanca','Quintero Mendez','tutor_usa_2@usa.edu.co','3042065930','567567457','Campo Organizacional','2022-II','documento2022_12_10_03_10_36_PM.pdf','0'),(4,'Andres','Mendoza Lopez','tutor_usa_3@usa.edu.co','3020659334','67457457','Campo clinico y salud','2022-I','documento2022_12_10_04_18_27_PM.pdf','1');
+INSERT INTO `tutor_usa` VALUES (2,'fabian','del carmen','tutor_usa_1@usa.edu.co','3042065930','3242134123','Campo Educativo','2022-II','documento2022_12_10_04_18_39_PM.pdf','1'),(3,'Blanca','Quintero Mendez','tutor_usa_2@usa.edu.co','3042065930','567567457','Campo Organizacional','2022-II','documento2022_12_10_03_10_36_PM.pdf','1'),(4,'Andres','Mendoza Lopez','tutor_usa_3@usa.edu.co','3020659334','67457457','Campo clinico y salud','2022-I','documento2022_12_10_04_18_27_PM.pdf','1');
 /*!40000 ALTER TABLE `tutor_usa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-12 17:40:58
+-- Dump completed on 2022-12-13 16:44:24

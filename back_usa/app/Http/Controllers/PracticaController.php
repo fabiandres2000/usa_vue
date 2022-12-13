@@ -512,4 +512,55 @@ class PracticaController extends Controller
 
     }
     #endregion tutores
+
+    #region asignacion
+    public function listar_estudiantes_no_asignados(){
+        $estudiantes_no_asignados = DB::connection("mysql")
+        ->table("estudiante")
+        ->where("asignado", '0')
+        ->where(function ($query) {
+            $query->where('semestre', '=', 'X')
+                  ->orWhere('semestre', '=', 'IX');
+        })
+        ->select("*")
+        ->get();
+
+        return response()->json([
+            'estudiantes_no_asignados' => $estudiantes_no_asignados,
+        ]);
+    }
+
+    public function listar_estudiantes_asignados(){
+        $estudiantes_asignados = DB::connection("mysql")
+        ->table("estudiante")
+        ->where("asignado", '1')
+        ->select("*")
+        ->get();
+
+        return response()->json([
+            'estudiantes_asignados' => $estudiantes_asignados,
+        ]);
+    }
+
+    public function listar_convenios_vigentes(){
+        $convenios = DB::connection("mysql")
+        ->table("convenio")
+        ->where("estado", '1')
+        ->select("*")
+        ->get();
+
+        $convenios_vigentes = array();
+
+        foreach ($convenios as $item) {
+            $fecha_actual = date('Y-m-d');
+            if($item->fecha_final >= $fecha_actual){
+                array_push($convenios_vigentes, $item);
+            }
+        }
+        
+        return response()->json([
+            'convenios_vigentes' => $convenios_vigentes,
+        ]);
+    }
+    #endregion asignacion
 }

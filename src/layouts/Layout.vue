@@ -50,7 +50,7 @@ export default {
 </script>
 <style lang="scss">
   .container{
-    max-width: 1300px;
+    max-width: 1500px;
   }
 
   input[type=radio]{

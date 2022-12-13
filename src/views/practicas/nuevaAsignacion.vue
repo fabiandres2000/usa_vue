@@ -23,16 +23,16 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div id="r1" class="card_radio">
-                                                        <input @click="select_radio('r1')" class="radio_b" type="radio" name="campo" id="card1">
+                                                        <input @click="select_radio('r1')" v-model="campo_elegido" value="Campo Educativo" class="radio_b" type="radio" name="campo" id="card1">
                                                         <label for="card1">
-                                                            <h5>Campo  Educativo</h5>
+                                                            <h5>Campo Educativo</h5>
                                                             <i class="fa-solid fa-school fa-5x"></i>
                                                         </label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div id="r2" class="card_radio">
-                                                        <input @click="select_radio('r2')" class="radio_b" type="radio" name="campo" id="card2">
+                                                        <input @click="select_radio('r2')" v-model="campo_elegido" value="Campo Social" class="radio_b" type="radio" name="campo" id="card2">
                                                         <label for="card2">
                                                             <h5>Campo  Social</h5>
                                                             <i class="fa-solid fa-user-group fa-5x"></i>
@@ -41,7 +41,7 @@
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div id="r3" class="card_radio">
-                                                        <input @click="select_radio('r3')" class="radio_b" type="radio" name="campo" id="card3">
+                                                        <input @click="select_radio('r3')" v-model="campo_elegido" value="Campo Organizacional" class="radio_b" type="radio" name="campo" id="card3">
                                                         <label for="card3">
                                                             <h5>Campo  Organizacional</h5>
                                                             <i class="fa-solid fa-users-viewfinder fa-5x"></i>
@@ -50,7 +50,7 @@
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div id="r4" class="card_radio">
-                                                        <input @click="select_radio('r4')" class="radio_b" type="radio" name="campo" id="card4">
+                                                        <input @click="select_radio('r4')" v-model="campo_elegido" value="Campo Clinico y Salud" class="radio_b" type="radio" name="campo" id="card4">
                                                         <label for="card4">
                                                             <h5>Campo  Clinico y Salud</h5>
                                                             <i class="fa-solid fa-user-doctor fa-5x"></i>
@@ -59,7 +59,7 @@
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div id="r5" class="card_radio">
-                                                        <input @click="select_radio('r5')" class="radio_b" type="radio" name="campo" id="card5">
+                                                        <input @click="select_radio('r5')" v-model="campo_elegido" value="Campo Juridico" class="radio_b" type="radio" name="campo" id="card5">
                                                         <label for="card5">
                                                             <h5>Campo  Juridico</h5>
                                                             <i class="fa-solid fa-gavel fa-5x"></i>
@@ -73,8 +73,28 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="card_section">
-                                            <h2 class="fs-title">Personal Information</h2>
-                                            
+                                            <h2 class="fs-title">Complete los Siguientes Datos</h2>
+                                            <h4><strong>Campo: </strong>{{campo_elegido}}</h4>  
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h5 for="">Estudiante</h5>
+                                                    <model-list-select 
+                                                        :list="options1"
+                                                        v-model="estudiante_seleccionado"
+                                                        option-value="id"
+                                                        :custom-text="codeAndNameAndDesc"
+                                                        placeholder="Seleccione Un Estudiante......"
+                                                    >
+                                                    </model-list-select>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h5 for="convenio">Convenio</h5>
+                                                    <select class="form-control" v-model="convenio_seleccionado" name="convenio" id="convenio">
+                                                        <option value="">Seleccione un convenio.....</option>
+                                                        <option :value="item.id" v-for="(item) in convenios_vigentes" :key="item.id">{{item.razon_social}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>                                          
                                         </div>
                                         <br>
                                         <button type="button" name="previous" class="previous action-button-previous"><i class="fa-solid fa-left-long"></i> Paso Anterior</button>
@@ -91,8 +111,21 @@
 
 <script>
 import $ from "jquery";
+import { ModelListSelect } from 'vue-search-select'
+import * as practicasService from "../../servicios/practicas"
+
 export default {
-    methods: {
+    components: {ModelListSelect},
+    data() {
+        return {
+            campo_elegido: "",
+            estudiante_seleccionado: [],
+            options1: [],
+            convenio_seleccionado: "",
+            convenios_vigentes: []
+        }
+    },
+    methods: { 
         multi(){
             var current_fs, next_fs, previous_fs; //fieldsets
             var opacity;
@@ -171,10 +204,25 @@ export default {
                     document.getElementById(id_l).classList.remove("card_radio_active");
                 }
             }   
-        }
+        },
+        async listar_estudiantes_no_asignados() {
+            await practicasService.listar_estudiantes_no_asignados().then(respuesta => {
+                this.options1 = respuesta.data.estudiantes_no_asignados;
+            });
+        },
+        codeAndNameAndDesc (item) {
+            return `${item.cedula} - ${item.nombre} - ${item.semestre}`
+        },
+        async listar_convenios_vigentes() {
+            await practicasService.listar_convenios_vigentes().then(respuesta => {
+                this.convenios_vigentes = respuesta.data.convenios_vigentes;
+            });
+        },
     },
     mounted() {
-        this.multi()
+        this.multi();
+        this.listar_estudiantes_no_asignados();
+        this.listar_convenios_vigentes();
     },
 }
 </script>
@@ -313,11 +361,13 @@ select.list-dt {
 #progressbar #account:before {
     font-family: FontAwesome;
     content: "\f1ad";
+    color: #00345e;
 }
 
 #progressbar #personal:before {
     font-family: FontAwesome;
     content: "\f007";
+    color: #00345e;
 }
 
 
@@ -349,7 +399,7 @@ select.list-dt {
 
 /*Color number of the step and the connector before it*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: #00345e;
+    background: #f7c000;
 }
 
 
@@ -393,11 +443,18 @@ select.list-dt {
   cursor: pointer;
 } 
 
-.card_section{
+.card_section {
     border: 2px solid lightgray;
     padding: 20px;
-    color: rgb(167, 165, 165);
+    color: rgb(100, 98, 98);
     text-align: left;
     border-radius: 10px;
+}
+
+.selection .default {
+    background-color: #007bff00 !important;
+    border-color: #563dea00 !important;
+    font-size: 16px;
+    color: #343638 !important;
 }
 </style>

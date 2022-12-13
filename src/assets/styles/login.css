@@ -1,12 +1,12 @@
 #nav_index {
     box-shadow: 0 0 0.375rem 0.25rem #a7a7a7;
-    max-height: 148px;
+    height: 152px !important;
     padding-left: 100px;
     background-color: #f8f8f8 !important;
 }
 
 #img_logo_2{
-    height: 182px;
+    height: 181px;
 }
 
 h2{

@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app clipped-left clipped-right color="primary" dark>
+  <v-app-bar app clipped-left clipped-right color="#003d6e" dark>
     <v-toolbar-title class="align-center d-flex">
       <span class="logo-icon">
         <img width="25%" src="../../assets/logo.png" />
@@ -14,7 +14,7 @@
     <v-menu bottom left transition="scale-transition">
       <template v-slot:activator="{ on }">
         <v-btn dark icon v-on="on">
-          <v-icon>mdi-account-circle</v-icon>
+          <v-icon x-large>mdi-account-circle</v-icon>
         </v-btn>
       </template>
 

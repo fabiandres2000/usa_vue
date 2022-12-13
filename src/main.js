@@ -12,6 +12,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueSession from 'vue-session'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'vue-search-select/dist/VueSearchSelect.css'
 
 Vue.use(VueSweetalert2);
 Vue.use(VueSession)

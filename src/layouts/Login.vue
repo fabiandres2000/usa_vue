@@ -1,132 +1,130 @@
 <template lang="">
-    <div id="cuerpo">
-      <div id= "sub" style="background-color: #dee2e6">
-        <div toggleable="lg" type="dark" variant="info" id="nav_index">
-          <div class="row">
-            <div class="col-3" style="margin-top: -22px !important;">
-              <img src="../assets/logo2.png" id="img_logo_2" alt="">
+    <div style="background-color: #dee2e6">
+      <div id="nav_index">
+        <div class="row" style="padding-top: 5px !important">
+          <div class="col-3" style="margin-top: -22px !important; padding: 12px">
+            <img src="../assets/logo2.png" id="img_logo_2" alt="">
+          </div>
+          <div class="col-8" id="menu_prin" style="margin-left: 3%">
+            <div class="row" style="padding-top: 0px !important">
+              <div class="col-7"></div>
+              <div class="itemcol col-2 text-right" style="padding: 12px">
+                <a href="#" v-b-modal.modal_s1><i class="fa-sharp fa-solid fa-circle-user fa-xl"></i> Iniciar sesión</a>
+              </div>
+              <div class="itemcol col-3 text-right"  style="padding: 12px">
+                <a href="#" v-b-modal.modal-rc><i class="fa-solid fa-circle-info fa-xl"></i>  Recuperar Contraseña</a>
+              </div>
             </div>
-            <div class="col-8" id="menu_prin" style="margin-left: 3%">
-              <div class="row">
-                <div class="col-7"></div>
-                <div class="itemcol col-3 text-right">
-                  <a href="#" v-b-modal.modal-rc><i class="fa-solid fa-circle-info"></i> Recuperar Contraseña</a>
-                </div>
-                <div class="itemcol col-2 text-right">
-                  <a href="#" v-b-modal.modal_s1><i class="fa-sharp fa-solid fa-circle-user"></i> Iniciar sesión</a>
-                </div>
+            <div class="row" style="padding-top: 6px !important">
+              <div class="col-12 text-center" style="height: 60px; background-color: #00447a; padding-top: 14px">
+                <a href="https://twitter.com/LaSergioSM"><i class="fa-brands fa-twitter fa-2x"></i></a>
+                <a href="https://www.facebook.com/lasergiosm"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                <a href="https://www.youtube.com/channel/UCSskbG_tBKvRf9Ma4x6F29w"><i class="fa-brands fa-youtube fa-2x"></i></a>
+                <a href="https://www.instagram.com/lasergiosm/"><i class="fa-brands fa-instagram fa-2x"></i></a>
+                <a href="https://www.linkedin.com/school/universidad-sergio-arboleda/"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+              </div>
+            </div>     
+          </div>
+        </div>
+      </div>
+      <nav id="menu_mobil" style="display: none" class="navbar navbar-expand-lg navbar-light bg-light">
+        <button @click="abrirMenu" class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+              <div class="itemcol">
+                <a href="#" v-b-modal.modal-rc><i class="fa-solid fa-circle-info"></i> Recuperar Contraseña</a>
+              </div>
+              <div class="itemcol">
+                <a href="#" v-b-modal.modal_s1><i class="fa-sharp fa-solid fa-circle-user"></i> Iniciar sesión</a>
               </div>
               <div class="row">
-                <div class="col-12 text-center" style="height: 60px; background-color: #00447a">
+                <div class="col-12 text-center social_movil" style="height: 75px;">
+                  <hr>
                   <a href="https://twitter.com/LaSergioSM"><i class="fa-brands fa-twitter fa-2x"></i></a>
                   <a href="https://www.facebook.com/lasergiosm"><i class="fa-brands fa-facebook fa-2x"></i></a>
                   <a href="https://www.youtube.com/channel/UCSskbG_tBKvRf9Ma4x6F29w"><i class="fa-brands fa-youtube fa-2x"></i></a>
                   <a href="https://www.instagram.com/lasergiosm/"><i class="fa-brands fa-instagram fa-2x"></i></a>
                   <a href="https://www.linkedin.com/school/universidad-sergio-arboleda/"><i class="fa-brands fa-linkedin fa-2x"></i></a>
                 </div>
-              </div>     
-            </div>
+              </div>
           </div>
         </div>
-        <nav id="menu_mobil" style="display: none" class="navbar navbar-expand-lg navbar-light bg-light">
-          <button @click="abrirMenu" class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <div class="itemcol">
-                  <a href="#" v-b-modal.modal-rc><i class="fa-solid fa-circle-info"></i> Recuperar Contraseña</a>
-                </div>
-                <div class="itemcol">
-                  <a href="#" v-b-modal.modal_s1><i class="fa-sharp fa-solid fa-circle-user"></i> Iniciar sesión</a>
-                </div>
-                <div class="row">
-                  <div class="col-12 text-center social_movil" style="height: 75px;">
-                    <hr>
-                    <a href="https://twitter.com/LaSergioSM"><i class="fa-brands fa-twitter fa-2x"></i></a>
-                    <a href="https://www.facebook.com/lasergiosm"><i class="fa-brands fa-facebook fa-2x"></i></a>
-                    <a href="https://www.youtube.com/channel/UCSskbG_tBKvRf9Ma4x6F29w"><i class="fa-brands fa-youtube fa-2x"></i></a>
-                    <a href="https://www.instagram.com/lasergiosm/"><i class="fa-brands fa-instagram fa-2x"></i></a>
-                    <a href="https://www.linkedin.com/school/universidad-sergio-arboleda/"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+      </nav>
+      <br>
+      <br>
+      <div class="col-lg-12 text-left" style="padding-left: 10%; padding-right: 10%">
+      <h2 style="color: #00447a; text-align: left">Escuela de Comunicación, Periodismo y Psicología <br> Programa de Psicología</h2>
+      <hr>
+      <div class="card">
+        <div class="row">
+          <div class="col-6">
+            <div class="d-flex align-items-end p-2">
+              <form @submit.prevent="registro_estudiante" method="post" ref="form_init" id="form_init">
+                <div class="row text-left" style="padding-left: 40px;">
+                      <div class="col-lg-12">
+                        <h3 style="font-weight: bold; color: #2C4A73;">Cordial saludo,</h3>  
+                        <h3 style="font-weight: bold; text-align: justify;">Registro estudiante.</h3>
+                      </div>
                   </div>
-                </div>
-            </div>
+                  <div class="row" style="padding-left: 40px;">
+                      <div class="col-lg-12" style="padding-top: 15px;"><input name="cedula" id="cedula" type="number" class="form-control" placeholder="Cédula" required></div>
+                      <div class="col-lg-12" style="padding-top: 15px;"><input name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre Completo" required></div>
+                      <div class="col-lg-12" style="padding-top: 15px;"><input name="correo" id="correo" type="email" class="form-control" placeholder="Correo Electronico" required></div>
+                      <div class="col-lg-12" style="padding-top: 15px;"><input name="celular" id="celular" type="text" class="form-control" placeholder="Número de Celular" required></div>
+                      <div class="col-lg-6" style="padding-top: 15px;">
+                          <select  style="height: 34px;" name="semestre" id="semestre" class="form-control">
+                              <option value="">Semestre cursado</option>
+                              <option value="I">I Semestre</option>
+                              <option value="II">II Semestre</option>
+                              <option value="III">III Semestre</option>
+                              <option value="IV">IV Semestre</option>
+                              <option value="V">V Semestre</option>
+                              <option value="VI">VI Semestre</option>
+                              <option value="VII">VII Semestre</option>
+                              <option value="VIII">VIII Semestre</option>
+                              <option value="IX">IX Semestre</option>
+                              <option value="X">X Semestre</option>
+                          </select>
+                      </div>
+                      <div class="col-lg-6" style="padding-top: 15px;">
+                          <select  style="height: 34px;" name="periodo" id="periodo" class="form-control">
+                              <option value="">Fecha</option>
+                              <option value="2021-1">2021-1</option>
+                              <option value="2021-2">2021-2</option>
+                              <option value="2022-1">2022-1</option>
+                              <option value="2022-2">2022-2</option>
+                              <option value="2023-1">2023-1</option>
+                              <option value="2023-2">2023-2</option>
+                              <option value="2024-1">2024-1</option>
+                              <option value="2024-2">2024-2</option>
+                              <option value="2025-1">2025-1</option>
+                              <option value="2025-2">2025-2</option>
+                              <option value="2026-1">2026-1</option>
+                              <option value="2026-2">2026-2</option>
+                              <option value="2027-1">2027-1</option>
+                              <option value="2027-2">2027-2</option>
+                              <option value="2028-1">2028-1</option>
+                              <option value="2028-2">2028-2</option>
+                              <option value="2029-1">2029-1</option>
+                              <option value="2029-2">2029-2</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row" style="padding-left: 40px;">
+                    <div class="col-12" id="budiv">
+                      <hr>
+                      <button style="cursor: pointer;" class="btn btn-warning" type="submit" >Guardar Datos</button>
+                    </div>       
+                  </div>
+                </form>
+              </div>
           </div>
-        </nav>
-        <br>
-        <br>
-        <div class="col-lg-12 text-left" style="padding-left: 12%; padding-right: 12%">
-        <h2 style="color: #00447a; text-align: left">Escuela de Comunicación, Periodismo y Psicología <br> Programa de Psicología</h2>
-        <hr>
-        <div class="card">
-          <div class="row">
-            <div class="col-6">
-              <div class="d-flex align-items-end p-2">
-                <form @submit.prevent="registro_estudiante" method="post" ref="form_init" id="form_init">
-                  <div class="row text-left" style="padding-left: 40px;">
-                        <div class="col-lg-12">
-                          <h3 style="font-weight: bold; color: #2C4A73;">Cordial saludo,</h3>  
-                          <h3 style="font-weight: bold; text-align: justify;">Registro estudiante.</h3>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-left: 40px;">
-                        <div class="col-lg-12" style="padding-top: 15px;"><input name="cedula" id="cedula" type="number" class="form-control" placeholder="Cédula" required></div>
-                        <div class="col-lg-12" style="padding-top: 15px;"><input name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre Completo" required></div>
-                        <div class="col-lg-12" style="padding-top: 15px;"><input name="correo" id="correo" type="email" class="form-control" placeholder="Correo Electronico" required></div>
-                        <div class="col-lg-12" style="padding-top: 15px;"><input name="celular" id="celular" type="text" class="form-control" placeholder="Número de Celular" required></div>
-                        <div class="col-lg-6" style="padding-top: 15px;">
-                            <select  style="height: 34px;" name="semestre" id="semestre" class="form-control">
-                                <option value="">Semestre cursado</option>
-                                <option value="I">I Semestre</option>
-                                <option value="II">II Semestre</option>
-                                <option value="III">III Semestre</option>
-                                <option value="IV">IV Semestre</option>
-                                <option value="V">V Semestre</option>
-                                <option value="VI">VI Semestre</option>
-                                <option value="VII">VII Semestre</option>
-                                <option value="VIII">VIII Semestre</option>
-                                <option value="IX">IX Semestre</option>
-                                <option value="X">X Semestre</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-6" style="padding-top: 15px;">
-                            <select  style="height: 34px;" name="periodo" id="periodo" class="form-control">
-                                <option value="">Fecha</option>
-                                <option value="2021-1">2021-1</option>
-                                <option value="2021-2">2021-2</option>
-                                <option value="2022-1">2022-1</option>
-                                <option value="2022-2">2022-2</option>
-                                <option value="2023-1">2023-1</option>
-                                <option value="2023-2">2023-2</option>
-                                <option value="2024-1">2024-1</option>
-                                <option value="2024-2">2024-2</option>
-                                <option value="2025-1">2025-1</option>
-                                <option value="2025-2">2025-2</option>
-                                <option value="2026-1">2026-1</option>
-                                <option value="2026-2">2026-2</option>
-                                <option value="2027-1">2027-1</option>
-                                <option value="2027-2">2027-2</option>
-                                <option value="2028-1">2028-1</option>
-                                <option value="2028-2">2028-2</option>
-                                <option value="2029-1">2029-1</option>
-                                <option value="2029-2">2029-2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-left: 40px;">
-                      <div class="col-12" id="budiv">
-                        <hr>
-                        <button style="cursor: pointer;" class="btn btn-warning" type="submit" >Guardar Datos</button>
-                      </div>       
-                    </div>
-                  </form>
-                </div>
-            </div>
-            <div class="col-6" style="padding: 0px">
-              <img id="fondo_psi" style="width: 100%;" src="../assets/psicologia.jpg" alt="">
-            </div>
-          </div> 
+          <div class="col-6" style="padding: 0px">
+            <img id="fondo_psi" style="width: 100%;" src="../assets/psicologia.jpg" alt="">
           </div>
+        </div> 
         </div>
       </div>
         
@@ -185,7 +183,7 @@
             </div>
           </form>
       </b-modal>
-      <footer>
+      <footer style="margin-top: 30px">
         <div style="width: 100%; padding-left: 100px; padding-right: 100px; background-color: #003d6e">
           <div class="row">
             <div class="col-lg-3">

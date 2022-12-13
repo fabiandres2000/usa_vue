@@ -79,3 +79,12 @@ export function editar_tutor_sp($data) {
 export function cambiar_estado_tutor_sp($id) {
     return http().get('/cambiar-estado-tutor-sp?id='+$id);
 }
+
+export function listar_estudiantes_no_asignados() {
+    return http().get('/estudiantes-no-asignados');
+}
+
+export function listar_convenios_vigentes() {
+    return http().get('/convenios-vigentes');
+}
+

@@ -523,6 +523,7 @@ class PracticaController extends Controller
                   ->orWhere('semestre', '=', 'IX');
         })
         ->select("*")
+        ->orderBy("cedula","asc")
         ->get();
 
         return response()->json([
@@ -560,6 +561,21 @@ class PracticaController extends Controller
         
         return response()->json([
             'convenios_vigentes' => $convenios_vigentes,
+        ]);
+    }
+
+    public function tutores_sp_por_convenio(){
+        $data = request()->all();
+
+        $tutores_sp = DB::connection("mysql")
+        ->table("tutor_sp")
+        ->where("estado", '1')
+        ->where("id_convenio", $data["id"])
+        ->select("*")
+        ->get();
+
+        return response()->json([
+            'tutores_sp' => $tutores_sp,
         ]);
     }
     #endregion asignacion

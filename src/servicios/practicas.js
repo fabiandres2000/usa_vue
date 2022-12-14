@@ -88,3 +88,18 @@ export function listar_convenios_vigentes() {
     return http().get('/convenios-vigentes');
 }
 
+export function tutores_sp_por_convenio($id) {
+    return http().get('/tutores-por-convenio?id='+$id);
+}
+
+export function asignar_practicas($data) {
+    return http().post(
+        '/asignar-practica', 
+        $data, 
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+    );
+}

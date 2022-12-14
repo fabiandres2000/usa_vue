@@ -89,12 +89,51 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <h5 for="convenio">Convenio</h5>
-                                                    <select class="form-control" v-model="convenio_seleccionado" name="convenio" id="convenio">
+                                                    <select class="form-control" v-model="convenio_seleccionado" @change="tutores_sp_por_convenio($event)" name="convenio" id="convenio" >
                                                         <option value="">Seleccione un convenio.....</option>
                                                         <option :value="item.id" v-for="(item) in convenios_vigentes" :key="item.id">{{item.razon_social}}</option>
                                                     </select>
                                                 </div>
-                                            </div>                                          
+                                            </div>  
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h5 for="tutor_sp">Tutor (Sitio de Practica)</h5>
+                                                    <select class="form-control" v-model="tutor_sp_seleccionado" name="tutor_sp" id="tutor_sp" >
+                                                        <option value="">Seleccione un tutor.....</option>
+                                                        <option :value="item.id" v-for="(item) in tutores_sp" :key="item.id">{{item.nombres}} {{item.apellidos}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h5 for="tutor_usa">Tutor (Universidad Sergio Arboleda)</h5>
+                                                    <select class="form-control" v-model="tutor_usa_seleccionado" name="tutor_usa" id="tutor_usa" >
+                                                        <option value="">Seleccione un tutor.....</option>
+                                                        <option :value="item.id" v-for="(item) in tutores_usa" :key="item.id">{{item.nombres}} {{item.apellidos}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>  
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <h5 for="fecha_inicio">Fecha de Inicio</h5>
+                                                    <input type="date" class="form-control" v-model="fecha_inicio">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h5 for="fecha_final">Fecha de finalización</h5>
+                                                    <input type="date" class="form-control" v-model="fecha_final">
+                                                </div>
+                                            </div>  
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <h5 for="fecha_inicio">Registro ARL</h5>
+                                                    <input type="file" class="form-control" id="archivo_arl">
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h5 for="fecha_final">Comunicado</h5>
+                                                    <input type="file" class="form-control" id="archivo_comunicado">
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <button @click="agregar()" style="position: absolute;bottom: 10px;right: 11px; padding: 10px" class="btn btn-success"><i class="fa-solid fa-user-plus fa-2x"></i></button>
+                                                </div>
+                                            </div>                                     
                                         </div>
                                         <br>
                                         <button type="button" name="previous" class="previous action-button-previous"><i class="fa-solid fa-left-long"></i> Paso Anterior</button>
@@ -119,10 +158,16 @@ export default {
     data() {
         return {
             campo_elegido: "",
-            estudiante_seleccionado: [],
+            estudiante_seleccionado: {},
             options1: [],
             convenio_seleccionado: "",
-            convenios_vigentes: []
+            convenios_vigentes: [],
+            tutores_sp: [],
+            tutor_sp_seleccionado: "",
+            tutores_usa: [],
+            tutor_usa_seleccionado: "",
+            fecha_inicio: "",
+            fecha_final: "",
         }
     },
     methods: { 
@@ -218,11 +263,49 @@ export default {
                 this.convenios_vigentes = respuesta.data.convenios_vigentes;
             });
         },
+        async tutores_sp_por_convenio(event) {
+            await practicasService.tutores_sp_por_convenio(event.target.value).then(respuesta => {
+                this.tutores_sp = respuesta.data.tutores_sp;
+                this.tutor_sp_seleccionado = "";
+            });
+        },
+        async listar_tutores_usa() {
+            await practicasService.listar_tutores_usa().then(respuesta => {
+                var res = respuesta.data.tutores;
+                res.forEach(element => {
+                    if(element.estado == '1'){
+                        this.tutores_usa.push(element);
+                    }
+                });
+            });
+        },
+        async agregar(){
+            const formData = new FormData()
+            formData.append('estudiante', this.estudiante_seleccionado.id)
+            formData.append('convenio', this.convenio_seleccionado)
+            formData.append('tutor_sp', this.tutor_sp_seleccionado)
+            formData.append('tutor_usa', this.tutor_usa_seleccionado)
+            formData.append('campo', this.campo_elegido)
+            formData.append('arl', document.getElementById('archivo_arl').files[0])
+            formData.append('comunicado', document.getElementById('archivo_comunicado').files[0])
+            formData.append('fecha_inicio',this.fecha_inicio)
+            formData.append('fecha_final', this.fecha_final)
+
+            await practicasService.asignar_practicas(formData).then(respuesta => {
+                if(respuesta.data.codigo == 1){
+                    this.$swal('Correcto...', respuesta.data.respuesta, 'success');
+                    this.listar_estudiantes_no_asignados();
+                }else{
+                    this.$swal('Error...', respuesta.data.respuesta, 'error');
+                }
+            });
+        }
     },
     mounted() {
         this.multi();
         this.listar_estudiantes_no_asignados();
         this.listar_convenios_vigentes();
+        this.listar_tutores_usa();
     },
 }
 </script>
@@ -456,5 +539,10 @@ select.list-dt {
     border-color: #563dea00 !important;
     font-size: 16px;
     color: #343638 !important;
+}
+
+.selection .menu {
+    height: 200px !important;
+    overflow-y: scroll;
 }
 </style>

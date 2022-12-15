@@ -9,7 +9,7 @@
               <hr>
               <b-button variant="primary" v-b-modal.modal-tusa> Nuevo tutor <i class="fa-solid fa-square-plus"></i></b-button>
               <br><br>
-              <table id="tabla-tusa" class="table_data">
+              <table style="width: 100%" id="tabla-tusa" class="table_data">
                 <thead>
                   <tr>
                     <th style="text-align: center">Estado</th>

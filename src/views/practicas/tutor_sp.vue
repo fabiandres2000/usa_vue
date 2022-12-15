@@ -9,7 +9,7 @@
               <hr>
               <b-button variant="primary" v-b-modal.modal-tsp> Nuevo tutor <i class="fa-solid fa-square-plus"></i></b-button>
               <br><br>
-              <table id="tabla-tsp" class="table_data">
+              <table style="width: 100%" id="tabla-tsp" class="table_data">
                 <thead>
                   <tr>
                     <th style="text-align: center">Estado</th>

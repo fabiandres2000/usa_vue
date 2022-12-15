@@ -131,12 +131,46 @@
                                                     <input type="file" class="form-control" id="archivo_comunicado">
                                                 </div>
                                                 <div class="col-lg-1">
-                                                    <button @click="agregar()" style="position: absolute;bottom: 10px;right: 11px; padding: 10px" class="btn btn-success"><i class="fa-solid fa-user-plus fa-2x"></i></button>
+                                                    <button @click="agregar()" style="position: absolute;bottom: 5px;right: 11px; padding: 11px" class="btn btn-success"><i class="fa-solid fa-user-plus fa-2x"></i></button>
                                                 </div>
                                             </div>                                     
                                         </div>
                                         <br>
+                                        <hr>
+                                        <h2><strong>Lista de Asignaciones</strong></h2>
+                                        <table id="tabla-tsp" class="table_data" style="width: 100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Campo</th>
+                                                <th>Estudiante</th>
+                                                <th>Convenio</th>
+                                                <th>Tutor SP</th>
+                                                <th>Tutor USA</th>
+                                                <th>Fecha de Inicio</th>
+                                                <th>Fecha de Finalización</th>
+                                                <th>ARL</th>
+                                                <th>Comunicado</th>
+                                                <th>Opciones</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="(item, index) in lista_asignaciones" :key="item.id">
+                                                <td>{{item.campodata}}</td>
+                                                <td>{{item.estudiantedata.nombre}}</td>
+                                                <td>{{item.conveniodata.razon_social}}</td>
+                                                <td>{{item.tutor_sp.nombres}} {{item.tutor_sp.apellidos}}</td>
+                                                <td>{{item.tutor_usa.nombres}} {{item.tutor_usa.apellidos}}</td>
+                                                <td>{{item.fecha_inicio}}</td>
+                                                <td>{{item.fecha_final}}</td>
+                                                <td><button @click="mostrarPDF(item.arl)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button></td>
+                                                <td><button @click="mostrarPDF(item.comunicado)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button></td>
+                                                <td><button @click="eliminar(index)" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <hr>
                                         <button type="button" name="previous" class="previous action-button-previous"><i class="fa-solid fa-left-long"></i> Paso Anterior</button>
+                                        <button type="button" class="btn-guardar btn btn-success">Guardar <i class="fa-solid fa-save fa-"></i></button>
                                     </fieldset>
                                 </div>
                             </div>
@@ -145,6 +179,35 @@
                 </div>      
             </v-col>
         </v-row>
+
+        <b-modal
+        ref="modalpdfadjunto"
+        hide-footer
+        title="Archivo Adjunto"
+        size="xl"
+        centered
+        header-bg-variant="warning"
+        header-text-variant="light"
+        :no-close-on-backdrop="true"
+      >
+        <embed
+          id="divPdf"
+          :src="rutaPdf"
+          type="application/pdf"
+          width="100%"
+          height="650px"
+        />
+        <hr />
+        <div class="text-right">
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="cerrarModal"
+          >
+            <i class="fa fa-window-close"></i> Cancelar
+          </button>
+        </div>
+      </b-modal>
     </v-container>
 </template>
 
@@ -168,6 +231,8 @@ export default {
             tutor_usa_seleccionado: "",
             fecha_inicio: "",
             fecha_final: "",
+            lista_asignaciones: [],
+            rutaPdf: ""
         }
     },
     methods: { 
@@ -280,25 +345,110 @@ export default {
             });
         },
         async agregar(){
-            const formData = new FormData()
-            formData.append('estudiante', this.estudiante_seleccionado.id)
-            formData.append('convenio', this.convenio_seleccionado)
-            formData.append('tutor_sp', this.tutor_sp_seleccionado)
-            formData.append('tutor_usa', this.tutor_usa_seleccionado)
-            formData.append('campo', this.campo_elegido)
-            formData.append('arl', document.getElementById('archivo_arl').files[0])
-            formData.append('comunicado', document.getElementById('archivo_comunicado').files[0])
-            formData.append('fecha_inicio',this.fecha_inicio)
-            formData.append('fecha_final', this.fecha_final)
 
-            await practicasService.asignar_practicas(formData).then(respuesta => {
-                if(respuesta.data.codigo == 1){
-                    this.$swal('Correcto...', respuesta.data.respuesta, 'success');
-                    this.listar_estudiantes_no_asignados();
-                }else{
-                    this.$swal('Error...', respuesta.data.respuesta, 'error');
-                }
-            });
+            if(this.campo_elegido == ""){
+                this.$swal('Error...', "Debe seleccionar un campo", 'error');
+                return 0;
+            }
+
+            if($.isEmptyObject(this.estudiante_seleccionado)){
+                this.$swal('Error...', "Debe seleccionar un estudiante", 'error');
+                return 0;
+            }
+
+            if(this.convenio_seleccionado == ""){
+                this.$swal('Error...', "Debe seleccionar un convenio", 'error');
+                return 0;
+            }
+           
+            if(this.tutor_sp_seleccionado == ""){
+                this.$swal('Error...', "Debe seleccionar un tutor SP", 'error');
+                return 0;
+            }
+
+            if(this.tutor_usa_seleccionado == ""){
+                this.$swal('Error...', "Debe seleccionar un tutor USA", 'error');
+                return 0;
+            }
+
+            if(this.fecha_inicio == ""){
+                this.$swal('Error...', "Debe seleccionar una fecha de inicio", 'error');
+                return 0;
+            }
+
+            if(this.fecha_final == ""){
+                this.$swal('Error...', "Debe seleccionar una fecha de finalización", 'error');
+                return 0;
+            }
+
+            if(document.getElementById("archivo_arl").files.length == 0){
+                this.$swal('Error...', "Debe seleccionar un documento del registro de la ARL", 'error');
+                return 0;
+            }
+
+            if(document.getElementById("archivo_comunicado").files.length == 0){
+                this.$swal('Error...', "Debe seleccionar un documento del comunicado", 'error');
+                return 0;
+            }
+
+        
+            var objeto = {
+                campodata: this.campo_elegido,
+                estudiantedata: this.estudiante_seleccionado,
+                conveniodata: this.convenios_vigentes.filter((item) => { return item.id == this.convenio_seleccionado})[0],
+                tutor_sp: this.tutores_sp.filter((item) => { return item.id == this.tutor_sp_seleccionado})[0],
+                tutor_usa: this.tutores_usa.filter((item) => { return item.id == this.tutor_usa_seleccionado})[0],
+                fecha_inicio: this.fecha_inicio,
+                fecha_final: this.fecha_final,
+                arl: document.getElementById('archivo_arl').files[0],
+                comunicado: document.getElementById('archivo_comunicado').files[0]
+            }
+
+            this.lista_asignaciones.push(objeto);
+
+            this.limpiarCampos();          
+        }, 
+        async asignar_lista_estudiantes(){
+
+            var lista_errores = [];
+            
+            for (let index = 0; index < this.lista_asignaciones.length; index++) {
+                const element = this.lista_asignaciones[index];
+
+                let formData = new FormData()
+                formData.append('estudiante', element.estudiantedata)
+                formData.append('convenio', element.conveniodata)
+                formData.append('tutor_sp', element.tutor_sp)
+                formData.append('tutor_usa', element.tutor_usa)
+                formData.append('campo', element.campodata)
+                formData.append('arl', element.arl)
+                formData.append('comunicado', element.comunicado)
+                formData.append('fecha_inicio', element.fecha_inicio)
+                formData.append('fecha_final', element.fecha_final)
+
+                await practicasService.asignar_practicas(formData).then(respuesta => {
+                    if(respuesta.data.codigo == 0){
+                        lista_errores.push(respuesta.data.respuesta);
+                    }
+                });
+            }
+        },
+        limpiarCampos(){
+            this.estudiante_seleccionado = {};
+            this.convenio_seleccionado = "";
+            this.tutor_sp_seleccionado = "";
+            this.tutor_usa_seleccionado = "";
+            this.fecha_final = "";
+            this.fecha_inicio = "";
+            document.getElementById('archivo_arl').value = "";
+            document.getElementById('archivo_comunicado').value = "";
+        },
+        mostrarPDF(ruta){
+            this.rutaPdf = URL.createObjectURL(ruta)
+            this.$refs.modalpdfadjunto.show();
+        },
+        cerrarModal(){
+            this.$refs.modalpdfadjunto.hide();
         }
     },
     mounted() {
@@ -307,6 +457,7 @@ export default {
         this.listar_convenios_vigentes();
         this.listar_tutores_usa();
     },
+    
 }
 </script>
 <style>
@@ -544,5 +695,30 @@ select.list-dt {
 .selection .menu {
     height: 200px !important;
     overflow-y: scroll;
+}
+
+th {
+    background-color: #003670;
+    color: #ffff;
+}
+
+th, td {
+    padding: 10px;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #eeeeee !important;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #c0bfbf !important;
+}
+
+.btn-guardar{
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 9px;
+    width: 200px;
 }
 </style>

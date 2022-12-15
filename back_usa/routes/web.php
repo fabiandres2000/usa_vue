@@ -40,3 +40,4 @@ Route::get('/cambiar-estado-tutor-sp', [PracticaController::class, 'cambiar_esta
 Route::get('/estudiantes-no-asignados', [PracticaController::class, 'listar_estudiantes_no_asignados']);
 Route::get('/convenios-vigentes', [PracticaController::class, 'listar_convenios_vigentes']);
 Route::get('/tutores-por-convenio', [PracticaController::class, 'tutores_sp_por_convenio']);
+Route::post('/asignar-practica', [PracticaController::class, 'asignar_practica']);

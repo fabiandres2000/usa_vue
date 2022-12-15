@@ -200,7 +200,7 @@ class PracticaController extends Controller
         
             $insert = DB::connection("mysql")
             ->table("tutor_usa")
-            ->insert([
+            ->insertGetId([
                 'nombres' => $data["nombres"],
                 'apellidos' => $data["apellidos"],
                 'correo'=> $data["correo"],
@@ -211,7 +211,7 @@ class PracticaController extends Controller
                 'documento_contrato'=> $filename1,
             ]);
     
-            if($insert){
+            if(!empty($insert)){
                   
                 if ($documento_tmp1->isValid()) {    
                     $documento_tmp1->move(public_path().'/contratos_tutores_usa/', $filename1);
@@ -225,6 +225,7 @@ class PracticaController extends Controller
                     'nombre' => $data["nombres"]." ".$data["apellidos"],
                     'foto'=> "pic.png",
                     'tipo'=> "Tutor USA",
+                    'id_tutor_usa'=> $insert,
                 ]);
 
                 $objeto = new EmailController();
@@ -258,12 +259,6 @@ class PracticaController extends Controller
         }else{
             $filename1 = "NADA";
         }
-       
-        $tutor_viejo = DB::connection("mysql")
-        ->table("tutor_usa")
-        ->where("id", $data["id"])
-        ->select("*")
-        ->first();
  
         $update = DB::connection("mysql")
         ->table("tutor_usa")
@@ -287,7 +282,7 @@ class PracticaController extends Controller
 
             DB::connection("mysql")
             ->table("usuario")
-            ->where("correo", $tutor_viejo->correo)
+            ->where("id_tutor_usa", $data["id"])
             ->update([
                 'correo' => $data["correo"],
                 'nombre' => $data["nombres"]." ".$data["apellidos"],
@@ -380,7 +375,7 @@ class PracticaController extends Controller
 
             $insert = DB::connection("mysql")
             ->table("tutor_sp")
-            ->insert([
+            ->insertGetId([
                 'nombres' => $data["nombres"],
                 'apellidos' => $data["apellidos"],
                 'correo'=> $data["correo"],
@@ -391,7 +386,7 @@ class PracticaController extends Controller
                 'id_convenio'=> $data["convenio"],
             ]);
     
-            if($insert){
+            if(!empty($insert)){
              
                 DB::connection("mysql")
                 ->table("usuario")
@@ -401,6 +396,7 @@ class PracticaController extends Controller
                     'nombre' => $data["nombres"]." ".$data["apellidos"],
                     'foto'=> "pic.png",
                     'tipo'=> "Tutor SP",
+                    'id_tutor_sp'=> $insert,
                 ]);
 
                 $objeto = new EmailController();
@@ -450,7 +446,7 @@ class PracticaController extends Controller
                 
             DB::connection("mysql")
             ->table("usuario")
-            ->where("correo", $tutor_viejo->correo)
+            ->where("id_tutor_sp",$data['id'])
             ->update([
                 'correo' => $data["correo"],
                 'nombre' => $data["nombres"]." ".$data["apellidos"],
@@ -576,6 +572,13 @@ class PracticaController extends Controller
 
         return response()->json([
             'tutores_sp' => $tutores_sp,
+        ]);
+    }
+
+    public function asignar_practica(){
+        return response()->json([
+            'respuesta' => "Ocurrio un error, intente mas tarde.",
+            'codigo' => 0,
         ]);
     }
     #endregion asignacion

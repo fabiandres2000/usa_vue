@@ -16,6 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `asignacion_practica`
+--
+
+DROP TABLE IF EXISTS `asignacion_practica`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignacion_practica` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_estudiante` varchar(45) DEFAULT NULL,
+  `id_convenio` varchar(45) DEFAULT NULL,
+  `id_tutor_sp` varchar(45) DEFAULT NULL,
+  `id_tutor_usa` varchar(45) DEFAULT NULL,
+  `campo` varchar(450) DEFAULT NULL,
+  `fecha_inicio` varchar(45) DEFAULT NULL,
+  `fecha_final` varchar(45) DEFAULT NULL,
+  `arl` varchar(450) DEFAULT NULL,
+  `comunicado` varchar(450) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asignacion_practica`
+--
+
+LOCK TABLES `asignacion_practica` WRITE;
+/*!40000 ALTER TABLE `asignacion_practica` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asignacion_practica` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `convenio`
 --
 
@@ -223,7 +254,7 @@ CREATE TABLE `tutor_sp` (
   `id_convenio` varchar(400) DEFAULT NULL,
   `estado` varchar(45) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +263,7 @@ CREATE TABLE `tutor_sp` (
 
 LOCK TABLES `tutor_sp` WRITE;
 /*!40000 ALTER TABLE `tutor_sp` DISABLE KEYS */;
-INSERT INTO `tutor_sp` VALUES (1,'Andres','Quintero Mendez','andres345345@gmail.com','542354235235','564567456456','Campo Educativo','2022-II','4','1'),(2,'Blanca','Restrepo','jwalshy_g472f@gmail.com','3042065930','345342523','Campo Social','2022-I','2','1');
+INSERT INTO `tutor_sp` VALUES (2,'Blanca','del carmen','grovveip4213412341234@gmail.com','3042065930','4523452345','Campo Educativo','2022-II','1','1'),(3,'kariako Jose','Mendez Quintero','kariako.mendez@gmail.com','2134234234','34523452345','Campo Social','2022-I','2','1'),(4,'Jorge','Restrepo','joge@gmail.com','3042065930','1008','Campo Social','2022-II','2','1'),(5,'patricia','del carmen','psti@gmail.com','3042065930','546234656','Campo Social','2022-II','2','1'),(6,'Cristian Jose','Quintero Mendez','cristian@usa.edu.co','3042065930','1009','Campo Educativo','2022-II','1','1');
 /*!40000 ALTER TABLE `tutor_sp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +286,7 @@ CREATE TABLE `tutor_usa` (
   `documento_contrato` varchar(400) DEFAULT NULL,
   `estado` varchar(45) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +295,7 @@ CREATE TABLE `tutor_usa` (
 
 LOCK TABLES `tutor_usa` WRITE;
 /*!40000 ALTER TABLE `tutor_usa` DISABLE KEYS */;
-INSERT INTO `tutor_usa` VALUES (2,'fabian','del carmen','tutor_usa_1@usa.edu.co','3042065930','3242134123','Campo Educativo','2022-II','documento2022_12_10_04_18_39_PM.pdf','1'),(3,'Blanca','Quintero Mendez','tutor_usa_2@usa.edu.co','3042065930','567567457','Campo Organizacional','2022-II','documento2022_12_10_03_10_36_PM.pdf','1'),(4,'Andres','Mendoza Lopez','tutor_usa_3@usa.edu.co','3020659334','67457457','Campo clinico y salud','2022-I','documento2022_12_10_04_18_27_PM.pdf','1');
+INSERT INTO `tutor_usa` VALUES (1,'Blanca','Mendez','fab.mendez.18@gmail.com','3042065930','342342134','Campo Educativo','2022-I','documento2022_12_15_02_31_08_PM.pdf','1'),(2,'Andres','Restrepo Gonzales','andres@gmail.com','3042065930','1008','Campo Organizacional','2022-I','documento2022_12_15_02_55_20_PM.pdf','1'),(3,'Prueba','Mendez','grovveip22341234@gmail.com','3042065930','412341234','Campo Social','2022-I','documento2022_12_15_02_40_47_PM.pdf','1');
 /*!40000 ALTER TABLE `tutor_usa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,8 +314,10 @@ CREATE TABLE `usuario` (
   `foto` varchar(405) DEFAULT NULL,
   `tipo` varchar(405) DEFAULT NULL,
   `id_estudiante` varchar(45) DEFAULT NULL,
+  `id_tutor_usa` varchar(45) DEFAULT NULL,
+  `id_tutor_sp` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +326,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin','admin@usa.edu.co','ee61e766467546320854c3446ccde3d4','pic.png','Decanatura',NULL),(19,'Andres Quintero','grovveip@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','2'),(20,'Andres Quintero 2','grovveip2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','3'),(21,'Andres Quintero 3','grovveip3@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','4'),(22,'Andres Quintero 4','grovveip4@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','5'),(23,'Andres Quintero 5','grovveip5@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','6'),(24,'Andres Quintero 6','grovveip6@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','7'),(25,'Andres Quintero 7','grovveip7@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','8'),(26,'Andres Quintero 8','grovveip8@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','9'),(27,'Andres Quintero 9','grovveip9@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','10'),(31,'Fabian Quintero','practicas@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Practicas',NULL),(33,'fabian del carmen','tutor_usa_1@usa.edu.co','9d5aae505f7a3df3741a3f6fc388e4bb','pic.png','Tutor USA',NULL),(34,'Blanca Quintero Mendez','tutor_usa_2@usa.edu.co','8c319cddaedbabb0d2737b08c042bc25','pic.png','Tutor USA',NULL),(35,'Andres Mendoza Lopez','tutor_usa_3@usa.edu.co','b1255b4c3590bd939a532f1f7a612cc0','pic.png','Tutor USA',NULL),(36,'Andres Quintero Mendez','andres345345@gmail.com','90f2ffd58fe77997e7c7e88d02b67dc3','pic.png','Tutor SP',NULL),(37,'Andres Quintero Mendez','andres345345@gmail.com','ce5aadd8a4533e8909f8d5d3b0eb690e','pic.png','Tutor SP',NULL);
+INSERT INTO `usuario` VALUES (1,'Admin','admin@usa.edu.co','ee61e766467546320854c3446ccde3d4','pic.png','Decanatura',NULL,NULL,NULL),(19,'Andres Quintero','grovveip@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','2',NULL,NULL),(20,'Andres Quintero 2','grovveip2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','3',NULL,NULL),(21,'Andres Quintero 3','grovveip3@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','4',NULL,NULL),(22,'Andres Quintero 4','grovveip4@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','5',NULL,NULL),(23,'Andres Quintero 5','grovveip5@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','6',NULL,NULL),(24,'Andres Quintero 6','grovveip6@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','7',NULL,NULL),(25,'Andres Quintero 7','grovveip7@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','8',NULL,NULL),(26,'Andres Quintero 8','grovveip8@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','9',NULL,NULL),(27,'Andres Quintero 9','grovveip9@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','10',NULL,NULL),(31,'Fabian Quintero','practicas@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Practicas',NULL,NULL,NULL),(42,'Blanca Mendez','fab.mendez.18@gmail.com','c7e4ec9f7f4558f5e01313dc9fb0b493','pic.png','Tutor USA',NULL,'1',NULL),(43,'Andres Restrepo Gonzales','andres@gmail.com','27bbc4209578edb3d1ae5f152e424b33','pic.png','Tutor USA',NULL,'2',NULL),(44,'Prueba Mendez','grovveip22341234@gmail.com','714ca2ce6fa3a44fecfef7507229c533','pic.png','Tutor USA',NULL,'3',NULL),(45,'Blanca del carmen','grovveip4213412341234@gmail.com','1a051675276d801780eeb6bed2aaf766','pic.png','Tutor SP',NULL,NULL,'2'),(46,'kariako Jose Mendez Quintero','kariako.mendez@gmail.com','551c74da96b286f1fa4fc0bf81b6406d','pic.png','Tutor SP',NULL,NULL,'3'),(47,'Jorge Restrepo','joge@gmail.com','5daa912a54ec47d555d1302c5c484a8e','pic.png','Tutor SP',NULL,NULL,'4'),(48,'patricia del carmen','psti@gmail.com','2297355e4a641b1808a96a18b8ff8886','pic.png','Tutor SP',NULL,NULL,'5'),(49,'Cristian Jose Quintero Mendez','cristian@usa.edu.co','3107b292a7af26090ffa51167cd76a06','pic.png','Tutor SP',NULL,NULL,'6');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -306,4 +339,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-13 16:44:24
+-- Dump completed on 2022-12-16 14:21:37

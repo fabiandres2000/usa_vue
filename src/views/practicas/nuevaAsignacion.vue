@@ -136,41 +136,43 @@
                                             </div>                                     
                                         </div>
                                         <br>
-                                        <hr>
-                                        <h2><strong>Lista de Asignaciones</strong></h2>
-                                        <table id="tabla-tsp" class="table_data" style="width: 100%">
-                                            <thead>
-                                            <tr>
-                                                <th>Campo</th>
-                                                <th>Estudiante</th>
-                                                <th>Convenio</th>
-                                                <th>Tutor SP</th>
-                                                <th>Tutor USA</th>
-                                                <th>Fecha de Inicio</th>
-                                                <th>Fecha de Finalización</th>
-                                                <th>ARL</th>
-                                                <th>Comunicado</th>
-                                                <th>Opciones</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr v-for="(item, index) in lista_asignaciones" :key="item.id">
-                                                <td>{{item.campodata}}</td>
-                                                <td>{{item.estudiantedata.nombre}}</td>
-                                                <td>{{item.conveniodata.razon_social}}</td>
-                                                <td>{{item.tutor_sp.nombres}} {{item.tutor_sp.apellidos}}</td>
-                                                <td>{{item.tutor_usa.nombres}} {{item.tutor_usa.apellidos}}</td>
-                                                <td>{{item.fecha_inicio}}</td>
-                                                <td>{{item.fecha_final}}</td>
-                                                <td><button @click="mostrarPDF(item.arl)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button></td>
-                                                <td><button @click="mostrarPDF(item.comunicado)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button></td>
-                                                <td><button @click="eliminar(index)" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <hr>
+                                        <hr>                  
+                                        <div v-if="lista_asignaciones.length != 0">
+                                            <h2><strong>Lista de Asignaciones</strong></h2>
+                                            <table id="tabla-tsp" class="table_data" style="width: 100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Campo</th>
+                                                    <th>Estudiante</th>
+                                                    <th>Convenio</th>
+                                                    <th>Tutor SP</th>
+                                                    <th>Tutor USA</th>
+                                                    <th>Fecha de Inicio</th>
+                                                    <th>Fecha de Finalización</th>
+                                                    <th>ARL</th>
+                                                    <th>Comunicado</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr v-for="(item, index) in lista_asignaciones" :key="item.id">
+                                                    <td>{{item.campodata}}</td>
+                                                    <td>{{item.estudiantedata.nombre}}</td>
+                                                    <td>{{item.conveniodata.razon_social}}</td>
+                                                    <td>{{item.tutor_sp.nombres}} {{item.tutor_sp.apellidos}}</td>
+                                                    <td>{{item.tutor_usa.nombres}} {{item.tutor_usa.apellidos}}</td>
+                                                    <td>{{item.fecha_inicio}}</td>
+                                                    <td>{{item.fecha_final}}</td>
+                                                    <td><button @click="mostrarPDF(item.arl)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button></td>
+                                                    <td><button @click="mostrarPDF(item.comunicado)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button></td>
+                                                    <td><button @click="eliminar(index)" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <hr>
+                                        </div>   
                                         <button type="button" name="previous" class="previous action-button-previous"><i class="fa-solid fa-left-long"></i> Paso Anterior</button>
-                                        <button type="button" class="btn-guardar btn btn-success">Guardar <i class="fa-solid fa-save fa-"></i></button>
+                                        <button @click="asignar_lista_estudiantes" type="button" class="btn-guardar btn btn-success">Guardar <i class="fa-solid fa-save fa-"></i></button>
                                     </fieldset>
                                 </div>
                             </div>
@@ -416,10 +418,10 @@ export default {
                 const element = this.lista_asignaciones[index];
 
                 let formData = new FormData()
-                formData.append('estudiante', element.estudiantedata)
-                formData.append('convenio', element.conveniodata)
-                formData.append('tutor_sp', element.tutor_sp)
-                formData.append('tutor_usa', element.tutor_usa)
+                formData.append('estudiante',  JSON.stringify(element.estudiantedata))
+                formData.append('convenio', JSON.stringify(element.conveniodata))
+                formData.append('tutor_sp', JSON.stringify(element.tutor_sp))
+                formData.append('tutor_usa', JSON.stringify(element.tutor_usa))
                 formData.append('campo', element.campodata)
                 formData.append('arl', element.arl)
                 formData.append('comunicado', element.comunicado)
@@ -432,6 +434,18 @@ export default {
                     }
                 });
             }
+
+            if(lista_errores.length != 0){
+                var mensaje = "";
+                lista_errores.forEach(element => {
+                    mensaje = mensaje+element+"<br>"
+                });
+                this.$swal('Error...', mensaje, 'error');
+            }else{
+                this.$swal('Correcto...', "Asignaciones Guardadas Correctamente", 'success');
+            }
+
+            this.listar_estudiantes_no_asignados();
         },
         limpiarCampos(){
             this.estudiante_seleccionado = {};

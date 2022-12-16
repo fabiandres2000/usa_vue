@@ -576,10 +576,72 @@ class PracticaController extends Controller
     }
 
     public function asignar_practica(){
-        return response()->json([
-            'respuesta' => "Ocurrio un error, intente mas tarde.",
-            'codigo' => 0,
+
+        $data = request()->all();
+
+        $arl = $data['arl']; 
+        $comunicado = request()->get("comunicado");
+
+        if ($arl->isValid()) {    
+            $filename1 = 'arl_' . date('Y_m_d_h_i_s_A').".".$arl->getClientOriginalExtension();
+        }else{
+            $filename1 = "NADA";
+        }
+
+        $comunicado = $data['comunicado'];
+        if ($comunicado->isValid()) {    
+            $filename2 = 'comunicado_' . date('Y_m_d_h_i_s_A').".".$comunicado->getClientOriginalExtension();
+        }else{
+            $filename2 = "NADA";
+        }
+
+        $estudiante = json_decode($data["estudiante"]);
+        $convenio = json_decode($data["convenio"]);
+        $tutor_sp = json_decode($data["tutor_sp"]);
+        $tutor_usa = json_decode($data["tutor_usa"]);
+
+        $insert = DB::connection("mysql")
+        ->table("asignacion_practica")
+        ->insert([
+            'id_estudiante' => $estudiante->id,
+            'id_convenio' => $convenio->id,
+            'id_tutor_sp'=> $tutor_sp->id,
+            'id_tutor_usa'=> $tutor_usa->id,
+            'campo'=> $data["campo"],
+            'fecha_inicio'=> $data["fecha_inicio"],
+            'fecha_final'=> $data["fecha_final"],
+            'arl'=> $filename1,
+            'comunicado'=> $filename2,
         ]);
+
+        if($insert){
+            DB::connection("mysql")
+            ->table("estudiante")
+            ->where("id", $estudiante->id)
+            ->update([
+                'asignado' => '1',
+            ]);
+
+            if ($arl->isValid()) {    
+                $arl->move(public_path().'/asignaciones/arl/', $filename1);
+            }
+
+            if ($comunicado->isValid()) {    
+                $comunicado->move(public_path().'/asignaciones/comunicado/', $filename2);
+            }
+            
+            return response()->json([
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, con el estudiante ".$estudiante->nombre,
+                'codigo' => 0,
+            ]);
+        }
+
+        
     }
     #endregion asignacion
 }

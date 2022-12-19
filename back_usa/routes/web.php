@@ -41,3 +41,7 @@ Route::get('/estudiantes-no-asignados', [PracticaController::class, 'listar_estu
 Route::get('/convenios-vigentes', [PracticaController::class, 'listar_convenios_vigentes']);
 Route::get('/tutores-por-convenio', [PracticaController::class, 'tutores_sp_por_convenio']);
 Route::post('/asignar-practica', [PracticaController::class, 'asignar_practica']);
+Route::get('/listar-asignaciones', [PracticaController::class, 'listar_asignaciones']);
+Route::get('/eliminar-asignacion', [PracticaController::class, 'eliminar_asignacion']);
+
+Route::get('/verificar-asignacion', [PracticaController::class, 'verificar_asignacion']);

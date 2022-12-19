@@ -6,7 +6,7 @@
                     <v-card-text class="text-left p-3">
                         <b-tabs content-class="mt-3">
                             <b-tab title="Asignaciones Registradas" active>
-                                fgdfgdfgdfgdfgdfgdfgdfg
+                                <Asignaciones></Asignaciones>
                             </b-tab>
                             <b-tab title="Nueva Asignación">
                                 <nuevaAsignacionVue></nuevaAsignacionVue>
@@ -20,9 +20,11 @@
 </template>
 <script>
 import nuevaAsignacionVue from './nuevaAsignacion.vue';
+import Asignaciones from './asignaciones.vue';
 export default {
     components:{
-        nuevaAsignacionVue
+        nuevaAsignacionVue,
+        Asignaciones
     },
 }
 </script>

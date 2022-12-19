@@ -212,7 +212,7 @@ class EmailController extends Controller
             <br>
             <h4>Cordial saludo, $nombrecompleto </h4>
             <br>
-            <h4 style='text-align: justify;'>Su nueva información pra iniciar sesión es: <br><br><br>
+            <h4 style='text-align: justify;'>Su información para iniciar sesión es: <br><br><br>
                 <b>Su usuario es:</b> $correo <br><br>
                 <b>Su clave es:</b> $password <br><br>
                 <b>El enlace de inicio es:</b> $urllogin<br>
@@ -270,9 +270,40 @@ class EmailController extends Controller
         }
     }
 
-    public function enviar_correo_asignacion($correo, $nombrecompleto, $mensaje, $asunto){
+    public function enviar_correo_asignacion($correo, $nombrecompleto, $tipo, $asunto, $tutor1, $tutor2, $estudiante, $sitio, $fecha){
       
         $urllogin = "https://institutocolombianodepsicometria.com/usa/index.html";
+
+        $mensaje = "";
+        
+        switch ($tipo) {
+            case '1':
+                $mensaje = "la Universidad Sergio Arboleda - Sede Santa Marta, se permite informarle que, se le asigna los siguientes tutores para el
+                    acompañamiento y asesoría en el desarrollo de la práctica: <br><br>    
+                    <strong>Tutor SP (Sitio de Practicas): </strong>$tutor1<br>
+                    <strong>Tutor USA (Univ. Sergio Arboleda): </strong>$tutor2<br>
+                    <strong>Sitio de Practica: </strong>$sitio<br>
+                    <strong>Fecha: </strong>desde $fecha<br>
+                ";
+                break;
+            case '2':
+                $mensaje = "la Universidad Sergio Arboleda - Sede Santa Marta, se permite informarle que, usted Ha sido asignado como tutor SP (Sitio de practica) para el
+                acompañamiento y asesoría en el desarrollo de la práctica al siguiente estudiante: <br><br>
+                    <strong>Estudiante: </strong>$estudiante<br>
+                    <strong>Sitio de Practica: </strong>$sitio<br>
+                    <strong>Fecha: </strong>desde $fecha<br>
+                ";
+                break;
+            case '3':
+                $mensaje = "la Universidad Sergio Arboleda - Sede Santa Marta, se permite informarle que, usted Ha sido asignado como tutor USA (Universidad Sergio Arboleda) para el
+                acompañamiento y asesoría en el desarrollo de la práctica al siguiente estudiante: <br><br>
+                    <strong>Estudiante: </strong>$estudiante<br>
+                    <strong>Sitio de Practica: </strong>$sitio<br>
+                    <strong>Fecha: </strong>desde $fecha<br>
+                ";
+                break;
+        }
+
 
         $contenido = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
         <html xmlns='http://www.w3.org/1999/xhtml'>
@@ -473,6 +504,10 @@ class EmailController extends Controller
             <br>
             <h4 style='text-align: justify;'>
                 $mensaje
+            </h4>
+            <hr>
+            <h4 style='text-align: justify; color: red'>
+                Inicie sesión para ver los detalles: $urllogin
             </h4>
             <br>
             <br>

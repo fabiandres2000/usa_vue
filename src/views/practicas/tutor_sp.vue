@@ -197,24 +197,23 @@
             this.opcion = "guardar";
         },
         async registrar_tutor_sp(){
-    
-            const formData = new FormData(this.$refs['form_rtusa']); 
-            const data = {};
-            for (let [key, val] of formData.entries()) {
-            Object.assign(data, { [key]: val })
-            }
-    
-            if(this.opcion == "guardar"){
-            await practicasService.registrar_tutor_sp(data).then(respuesta => {
-                if(respuesta.data.codigo == 1){
-                this.$swal('Correcto...', respuesta.data.respuesta, 'success');
-                this.listar_tutores_sp();
-                this.cerrarModal();
-                }else{
-                    this.$swal('Error...', respuesta.data.respuesta, 'error');
-                }
-            });
-            }else{
+          const formData = new FormData(this.$refs['form_rtusa']); 
+          const data = {};
+          for (let [key, val] of formData.entries()) {
+          Object.assign(data, { [key]: val })
+          }
+  
+          if(this.opcion == "guardar"){
+          await practicasService.registrar_tutor_sp(data).then(respuesta => {
+              if(respuesta.data.codigo == 1){
+              this.$swal('Correcto...', respuesta.data.respuesta, 'success');
+              this.listar_tutores_sp();
+              this.cerrarModal();
+              }else{
+                  this.$swal('Error...', respuesta.data.respuesta, 'error');
+              }
+          });
+          }else{
             await practicasService.editar_tutor_sp(data).then(respuesta => {
                 if(respuesta.data.codigo == 1){
                 this.$swal('Correcto...', respuesta.data.respuesta, 'success');
@@ -224,8 +223,7 @@
                     this.$swal('Error...', respuesta.data.respuesta, 'error');
                 }
             });
-            }
-            
+          }
         },
         abrir_modal_editar_tutor_sp(item){
             this.opcion = "editar";
@@ -262,9 +260,9 @@
         }
         },
         mounted() {
-        this.listar_tutores_sp();
-        this.listar_convenios();
-        this.year = new Date().getFullYear();
+          this.listar_tutores_sp();
+          this.listar_convenios();
+          this.year = new Date().getFullYear();
         },
     };
 </script>

@@ -1,5 +1,6 @@
 <template lang="">
     <div style="background-color: #dee2e6">
+      <section id='loading'>Validando Datos....</section>
       <div id="nav_index">
         <div class="row" style="padding-top: 5px !important">
           <div class="col-3" style="margin-top: -22px !important; padding: 12px">
@@ -228,10 +229,15 @@ export default {
       };
   },
   mounted() {
-    
+    const load = document.querySelector("#loading");
+    load.style.display = "none";
   },
   methods: {
     async login() {
+
+      const load = document.querySelector("#loading");
+      load.style.display = "grid";
+
       const formData = new FormData(this.$refs['isesion']); 
       const data = {};
       for (let [key, val] of formData.entries()) {
@@ -244,10 +250,18 @@ export default {
           this.$session.set('correo', respuesta.data.usuario[0].correo)
           this.$session.set('foto', respuesta.data.usuario[0].foto)
           this.$session.set('tipo', respuesta.data.usuario[0].tipo)
+          this.$session.set('id_estudiante', respuesta.data.usuario[0].id_estudiante)
+          this.$session.set('id_tutor_usa', respuesta.data.usuario[0].id_tutor_usa)
+          this.$session.set('id_tutor_sp', respuesta.data.usuario[0].id_tutor_sp)
+
+          const load = document.querySelector("#loading");
+          load.style.display = "none";
 
           this.$router.push({ name: 'admin' })
         }else{
           this.$swal('Error...', respuesta.data.respuesta, 'error');
+          const load = document.querySelector("#loading");
+          load.style.display = "none";
         }
       });
     },
@@ -357,5 +371,16 @@ export default {
     z-index: 1;
     position: absolute;
     width: 90%;
+  }
+
+  #loading {
+    position: fixed;
+    inset: 0;
+    background: #0009;
+    display: grid;
+    place-items: center;
+    font-size: 4rem;
+    color: #fff;
+    z-index: 1000;
   }
 </style>

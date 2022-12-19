@@ -19,6 +19,7 @@
     "vee-validate": "^2.1.4",
     "vue": "^2.6.12",
     "vue-i18n": "^8.22.0",
+    "vue-loading-overlay": "^3.4.2",
     "vue-router": "^3.4.6",
     "vue-search-select": "^2.9.5",
     "vue-session": "^1.0.0",

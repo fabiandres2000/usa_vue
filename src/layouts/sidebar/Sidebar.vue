@@ -179,7 +179,7 @@ export default {
 </script>
 <style lang="scss">
 .v-sidebar-menu{
-  height: 84%;
+  height: 86%;
   margin-top: 110px;
 }
 #main-sidebar{

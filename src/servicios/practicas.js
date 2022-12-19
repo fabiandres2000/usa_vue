@@ -1,5 +1,6 @@
 import { http } from "./http_services";
 
+////////////////////convenios
 export function listar_convenios() {
     return http().get('/convenios');
 }
@@ -32,6 +33,9 @@ export function eliminar_convenio($id) {
     return http().get('/eliminar-convenio?id='+$id);
 }
 
+
+
+/////////////// tutores usa
 export function listar_tutores_usa() {
     return http().get('/tutores-usa');
 }
@@ -64,6 +68,8 @@ export function eliminar_tutuor_usa($id) {
     return http().get('/cambiar-estado-tutor-usa?id='+$id);
 }
 
+
+//////////////////// ti¡utores sp
 export function listar_tutores_sp() {
     return http().get('/tutores-sp');
 }
@@ -80,6 +86,8 @@ export function cambiar_estado_tutor_sp($id) {
     return http().get('/cambiar-estado-tutor-sp?id='+$id);
 }
 
+
+/////////////////// asignaciones
 export function listar_estudiantes_no_asignados() {
     return http().get('/estudiantes-no-asignados');
 }
@@ -102,4 +110,12 @@ export function asignar_practicas($data) {
             }
         }
     );
+}
+
+export function listar_asignaciones() {
+    return http().get('/listar-asignaciones');
+}
+
+export function eliminar_asignacion($id, $id_estudiante) {
+    return http().get('/eliminar-asignacion?id='+$id+'&id_estudiante='+$id_estudiante);
 }

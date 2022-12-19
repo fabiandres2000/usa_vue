@@ -1,5 +1,6 @@
 <template lang="">
     <v-container fluid class="down-top-padding">
+        <section id='loading'>Guardando Datos....</section>
         <v-row>
             <v-col cols="12" lg="12">
                 <!-- MultiStep Form -->
@@ -239,6 +240,9 @@ export default {
     },
     methods: { 
         multi(){
+            const load = document.querySelector("#loading");
+            load.style.display = "none";
+
             var current_fs, next_fs, previous_fs; //fieldsets
             var opacity;
             
@@ -411,41 +415,50 @@ export default {
             this.limpiarCampos();          
         }, 
         async asignar_lista_estudiantes(){
+            if(this.lista_asignaciones.length != 0){
+                const load = document.querySelector("#loading");
+                load.style.display = "grid";
 
-            var lista_errores = [];
-            
-            for (let index = 0; index < this.lista_asignaciones.length; index++) {
-                const element = this.lista_asignaciones[index];
+                var lista_errores = [];
+                
+                for (let index = 0; index < this.lista_asignaciones.length; index++) {
+                    const element = this.lista_asignaciones[index];
 
-                let formData = new FormData()
-                formData.append('estudiante',  JSON.stringify(element.estudiantedata))
-                formData.append('convenio', JSON.stringify(element.conveniodata))
-                formData.append('tutor_sp', JSON.stringify(element.tutor_sp))
-                formData.append('tutor_usa', JSON.stringify(element.tutor_usa))
-                formData.append('campo', element.campodata)
-                formData.append('arl', element.arl)
-                formData.append('comunicado', element.comunicado)
-                formData.append('fecha_inicio', element.fecha_inicio)
-                formData.append('fecha_final', element.fecha_final)
+                    let formData = new FormData()
+                    formData.append('estudiante',  JSON.stringify(element.estudiantedata))
+                    formData.append('convenio', JSON.stringify(element.conveniodata))
+                    formData.append('tutor_sp', JSON.stringify(element.tutor_sp))
+                    formData.append('tutor_usa', JSON.stringify(element.tutor_usa))
+                    formData.append('campo', element.campodata)
+                    formData.append('arl', element.arl)
+                    formData.append('comunicado', element.comunicado)
+                    formData.append('fecha_inicio', element.fecha_inicio)
+                    formData.append('fecha_final', element.fecha_final)
 
-                await practicasService.asignar_practicas(formData).then(respuesta => {
-                    if(respuesta.data.codigo == 0){
-                        lista_errores.push(respuesta.data.respuesta);
-                    }
-                });
-            }
+                    await practicasService.asignar_practicas(formData).then(respuesta => {
+                        if(respuesta.data.codigo == 0){
+                            lista_errores.push(respuesta.data.respuesta);
+                        }
+                    });
+                }
 
-            if(lista_errores.length != 0){
-                var mensaje = "";
-                lista_errores.forEach(element => {
-                    mensaje = mensaje+element+"<br>"
-                });
-                this.$swal('Error...', mensaje, 'error');
+                if(lista_errores.length != 0){
+                    var mensaje = "";
+                    lista_errores.forEach(element => {
+                        mensaje = mensaje+element+"<br>"
+                    });
+                    this.$swal('Error...', mensaje, 'error');
+                    load.style.display = "none";
+                }else{
+                    this.$swal('Correcto...', "Asignaciones Guardadas Correctamente", 'success');
+                    load.style.display = "none";
+                    this.lista_asignaciones = [];
+                }
+
+                this.listar_estudiantes_no_asignados();
             }else{
-                this.$swal('Correcto...', "Asignaciones Guardadas Correctamente", 'success');
-            }
-
-            this.listar_estudiantes_no_asignados();
+                this.$swal('Error...', "No hay asignaciones que guardar.", 'error');
+            } 
         },
         limpiarCampos(){
             this.estudiante_seleccionado = {};
@@ -734,5 +747,16 @@ tbody tr:nth-child(even) {
     font-weight: bold;
     padding: 9px;
     width: 200px;
+}
+
+#loading {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: grid;
+  place-items: center;
+  font-size: 4rem;
+  color: #fff;
+  z-index: 1000;
 }
 </style>

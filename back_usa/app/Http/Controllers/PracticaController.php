@@ -629,7 +629,18 @@ class PracticaController extends Controller
             if ($comunicado->isValid()) {    
                 $comunicado->move(public_path().'/asignaciones/comunicado/', $filename2);
             }
-            
+
+            $usuario_estudiante =  DB::connection("mysql")
+            ->table("usuario")
+            ->where("id_estudiante", $estudiante->id)
+            ->select("*")
+            ->first();
+
+            $objeto = new EmailController();
+            $objeto->enviar_correo_asignacion($usuario_estudiante->correo, $estudiante->nombre, '1', "Asignación de practicas", $tutor_sp->nombres." ".$tutor_sp->apellidos, $tutor_usa->nombres." ".$tutor_usa->apellidos, $estudiante->nombre, $convenio->razon_social, $data["fecha_inicio"]." hasta ".$data["fecha_final"]);
+            $objeto->enviar_correo_asignacion($tutor_sp->correo, $tutor_sp->nombres." ".$tutor_sp->apellidos, '2', "Asignación de practicas", $tutor_sp->nombres." ".$tutor_sp->apellidos, $tutor_usa->nombres." ".$tutor_usa->apellidos, $estudiante->nombre, $convenio->razon_social, $data["fecha_inicio"]." hasta ".$data["fecha_final"]);
+            $objeto->enviar_correo_asignacion($tutor_usa->correo, $tutor_usa->nombres." ".$tutor_usa->apellidos, '3', "Asignación de practicas", $tutor_sp->nombres." ".$tutor_sp->apellidos, $tutor_usa->nombres." ".$tutor_usa->apellidos, $estudiante->nombre, $convenio->razon_social, $data["fecha_inicio"]." hasta ".$data["fecha_final"]);
+
             return response()->json([
                 'codigo' => 1,
             ]);
@@ -640,8 +651,75 @@ class PracticaController extends Controller
                 'codigo' => 0,
             ]);
         }
+    }
 
+    public function listar_asignaciones(){
+        $asignaciones = DB::connection("mysql")
+        ->table("asignacion_practica")
+        ->join("estudiante","estudiante.id","asignacion_practica.id_estudiante")
+        ->join("convenio","convenio.id","asignacion_practica.id_convenio")
+        ->join("tutor_sp","tutor_sp.id","asignacion_practica.id_tutor_sp")
+        ->join("tutor_usa","tutor_usa.id","asignacion_practica.id_tutor_usa")
+        ->select("asignacion_practica.id", "asignacion_practica.campo", "asignacion_practica.arl", "asignacion_practica.comunicado", "estudiante.nombre as estudiante", "estudiante.semestre",  "estudiante.id as id_estudiante", "convenio.razon_social as sp")
+        ->selectRaw("CONCAT(tutor_sp.nombres,' ',tutor_sp.apellidos) AS tutor_sp")
+        ->selectRaw("CONCAT(tutor_usa.nombres,' ',tutor_usa.apellidos) AS tutor_usa")
+        ->selectRaw("CONCAT(asignacion_practica.fecha_inicio,' / ',asignacion_practica.fecha_final) AS fecha")
+        ->get();
+
+        return response()->json([
+            'asignaciones' => $asignaciones,
+        ]);
+    }
+    
+    public function eliminar_asignacion()
+    {
+        $data = request()->all();
         
+        $delete = DB::connection("mysql")
+        ->table("asignacion_practica")
+        ->where("id", $data["id"])
+        ->delete();
+
+        if($delete){
+            $update = DB::connection("mysql")
+            ->table("estudiante")
+            ->where("id", $data['id_estudiante'])
+            ->update([
+                'asignado' => '0',
+            ]);
+
+            if($update){
+                return response()->json([
+                    'respuesta' => "Asignación Eliminada Correctamente!",
+                    'codigo' => 1,
+                ]);
+            }else{
+                return response()->json([
+                    'respuesta' => "Ocurrio un error, intente mas tarde.",
+                    'codigo' => 0,
+                ]);
+            }
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+    }
+
+    public function verificar_asignacion(){
+
+        $data = request()->all();
+
+        $asignacion = DB::connection("mysql")
+        ->table("asignacion_practica")
+        ->where("id_estudiante", $data["id"])
+        ->select("*")
+        ->first();
+
+        return response()->json([
+            'asignacion' => $asignacion,
+        ]);
     }
     #endregion asignacion
 }

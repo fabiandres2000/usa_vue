@@ -67,22 +67,26 @@ export default {
       {
         title: "Practicas",
         icon: "fa-solid fa-person-digging",
+        href: "/admin/registro-practica"
+      },
+      {
+        title: "Test",
+        icon: "fa-solid fa-person-circle-question",
         href: "",
         child: [
               {
-                  href: '/admin/registro-practica',
-                  title: 'Registro'
+                href: "/estudiante/caracterizacion",
+                title: 'Caracterización'
               },
               {
-                  href: '/charts/sublink',
-                  title: 'Estado'
+                href: '/charts/sublink',
+                title: 'Vocacional'
+              },
+              {
+                href: '/charts/sublink',
+                title: 'Personalidad'
               }
           ]
-      },
-      {
-        title: "Caracterización",
-        icon: "fa-solid fa-person-circle-question",
-        href: "/admin/pages/icons"
       },
       {
         title: "Test 1",

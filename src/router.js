@@ -78,6 +78,12 @@ export default new Router({
                     path: '/practicas/asignaciones',
                     component: () => import('@/views/practicas/AdminAsignaciones'),
                 },
+
+                {
+                    name: 'Caracterizacion',
+                    path: '/estudiante/caracterizacion',
+                    component: () => import('@/views/estudiante/caracterizacion'),
+                },
             ]
         },
     ],

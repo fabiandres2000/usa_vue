@@ -722,4 +722,229 @@ class PracticaController extends Controller
         ]);
     }
     #endregion asignacion
+
+    #region practicas
+    public function registrar_practica(){
+        $data = request()->all();
+
+
+        $ins_1 = $data["ins_1"];
+        if($ins_1 == "si"){
+            $documento_tmp1 = $data['excel_1_R']; 
+            $filename1 = 'excel_1_R' . date('Y_m_d_h_i_s_A').".".$documento_tmp1->getClientOriginalExtension();  
+            $cual_ins_1 = $data["cual_ins_1"];
+        }else{
+            $cual_ins_1 = "Ninguno";
+            $filename1 = "";
+        }
+    
+        $ins_2 = $_POST["ins_2"];
+        if($ins_2 == "si"){
+            $documento_tmp2 = $data['excel_2_R']; 
+            $filename2 = 'excel_2_R' . date('Y_m_d_h_i_s_A').".".$documento_tmp2->getClientOriginalExtension(); 
+            $cual_ins_2 = $data["cual_ins_2"];
+        }else{
+            $cual_ins_2 = "Ninguno";
+            $filename2 = "";
+        }
+
+        $proyecto = $data['proyecto']; 
+        $filename3 = 'practica' . date('Y_m_d_h_i_s_A').".".$proyecto->getClientOriginalExtension(); 
+
+        $insert = DB::connection("mysql")
+        ->table("practica")
+        ->insert([
+            'nombre_completo' => $data["nombre"],
+            'semestre' => $data["semestre"],
+            'fecha'=> $data["periodo"],
+            'tema'=> $data["tema"],
+            'sitio'=> $data["sitio"],
+            'tutor_sp'=> $data["tutor_sitio"],
+            'valoracion_tutor_sp'=> $data["valoracion_sitio"],
+            'tutor_usa'=> $data["tutor_usa"],
+            'valoracion_tutor_usa'=> $data["valoracion_usa"],
+            'proyecto'=> $filename3,
+            'aplico_instrumento'=> $ins_1,
+            'instrumento'=> $cual_ins_1,
+            'excel_1'=> $filename1,
+            'aplico_instrumento_2'=> $ins_2,
+            'instrumento_2'=> $cual_ins_2,
+            'excel_2'=> $filename2,
+            'id_estudiante'=> $data["id_estudiante"],
+        ]);
+
+        if($insert){
+
+            if($ins_1 == "si"){
+                $documento_tmp1 = $data['excel_1_R'];   
+                $documento_tmp1->move(public_path().'/archivos_practica/', $filename1);
+            } 
+            
+            if($ins_2 == "si"){
+                $documento_tmp2 = $data['excel_2_R'];   
+                $documento_tmp2->move(public_path().'/archivos_practica/', $filename2);
+            } 
+
+            $proyecto->move(public_path().'/archivos_practica/', $filename3);
+           
+            return response()->json([
+                'respuesta' => "Practica Registrada Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+
+    }
+
+    public function verificar_registro(){
+
+        $data = request()->all();
+
+        $registro = DB::connection("mysql")
+        ->table("practica")
+        ->where("id_estudiante", $data["id"])
+        ->select("*")
+        ->first();
+
+        return response()->json([
+            'registro' => $registro,
+        ]);
+    }
+
+    public function editar_practica(){
+        $data = request()->all();
+        $fileName1 = NULL;
+        $fileName2 = NULL;
+        $fileNameProyecto = NULL;
+
+        $registro = DB::connection("mysql")
+        ->table("practica")
+        ->where("id", $data["id_practica"])
+        ->select("*")
+        ->first();
+        
+        $ins_1 = $data["ins_1"];
+        if($ins_1 == "si"){
+            $cual_ins_1 = $data["cual_ins_1"];
+            if(isset($data['excel_1_R'])){
+                $documento_tmp1 = $data['excel_1_R'];   
+                $filename1 = 'excel_1_R' . date('Y_m_d_h_i_s_A').".".$documento_tmp1->getClientOriginalExtension();  
+            }else{
+                $fileName1 = NULL;
+            }
+
+        }else{
+            File::delete(public_path('archivos_practica/'.$registro->excel_1));
+            $cual_ins_1 = "Ninguno";
+            $fileName1 = "";
+        }
+
+        $ins_2 = $data["ins_2"];
+        if($ins_2 == "si"){
+            $cual_ins_2 = $data["cual_ins_2"];    
+            if(isset($data['excel_2_R'])){
+                $documento_tmp2 = $data['excel_2_R'];   
+                $filename2 = 'excel_2_R' . date('Y_m_d_h_i_s_A').".".$documento_tmp2->getClientOriginalExtension();  
+            }else{
+                $fileName2 = NULL;
+            }
+
+        }else{
+            File::delete(public_path('archivos_practica/'.$registro->excel_2));
+            $cual_ins_2 = "Ninguno";
+            $fileName2 = "";
+        }
+
+        $proyecto = $data['proyecto']; 
+        $fileNameProyecto = 'practica' . date('Y_m_d_h_i_s_A').".".$proyecto->getClientOriginalExtension(); 
+
+        $id_practica = $data["id_practica"];
+
+        $update = DB::connection("mysql")
+        ->table("practica")
+        ->where('id', $id_practica)
+        ->update([
+            'nombre_completo' => $data["nombre"],
+            'semestre' => $data["semestre"],
+            'fecha'=> $data["periodo"],
+            'tema'=> $data["tema"],
+            'sitio'=> $data["sitio"],
+            'tutor_sp'=> $data["tutor_sitio"],
+            'valoracion_tutor_sp'=> $data["valoracion_sitio"],
+            'tutor_usa'=> $data["tutor_usa"],
+            'valoracion_tutor_usa'=> $data["valoracion_usa"],
+            'proyecto'=> $fileNameProyecto,
+            'aplico_instrumento'=> $ins_1,
+            'instrumento'=> $cual_ins_1,
+            'aplico_instrumento_2'=> $ins_2,
+            'instrumento_2'=> $cual_ins_2,
+        ]);
+
+        if($update){
+            if(isset($filename1)){
+
+                File::delete(public_path('archivos_practica/'.$registro->excel_1));
+
+                DB::connection("mysql")
+                ->table("practica")
+                ->where('id', $id_practica)
+                ->update([
+                    'excel_1' => $filename1,
+                ]);
+
+                if(isset($data['excel_1_R'])){
+                    $documento_tmp1 = $data['excel_1_R'];   
+                    $documento_tmp1->move(public_path().'/archivos_practica/', $filename1);
+                }
+            }
+        
+            if(isset($filename2)){
+                
+                File::delete(public_path('archivos_practica/'.$registro->excel_2));
+
+                DB::connection("mysql")
+                ->table("practica")
+                ->where('id', $id_practica)
+                ->update([
+                    'excel_2' => $filename2,
+                ]);
+
+                if(isset($data['excel_2_R'])){
+                    $documento_tmp2 = $data['excel_2_R'];   
+                    $documento_tmp2->move(public_path().'/archivos_practica/', $filename2);
+                }
+            }
+        
+            if(isset($fileNameProyecto)){
+
+                File::delete(public_path('archivos_practica/'.$registro->proyecto));
+                
+                DB::connection("mysql")
+                ->table("practica")
+                ->where('id', $id_practica)
+                ->update([
+                    'proyecto' => $fileNameProyecto,
+                ]);
+
+                $proyecto->move(public_path().'/archivos_practica/', $fileNameProyecto);
+            }
+       
+            return response()->json([
+                'respuesta' => "Practica Modificada Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+    }
+    #endregion practicas
 }

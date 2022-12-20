@@ -23,6 +23,8 @@ class VerifyCsrfToken extends Middleware
         '/editar-tutor-usa',
         '/registrar-tutor-sp',
         '/editar-tutor-sp',
-        '/asignar-practica'
+        '/asignar-practica',
+        '/registrar-practica',
+        '/editar-practica'
     ];
 }

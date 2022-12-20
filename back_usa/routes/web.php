@@ -45,3 +45,6 @@ Route::get('/listar-asignaciones', [PracticaController::class, 'listar_asignacio
 Route::get('/eliminar-asignacion', [PracticaController::class, 'eliminar_asignacion']);
 
 Route::get('/verificar-asignacion', [PracticaController::class, 'verificar_asignacion']);
+Route::post('/registrar-practica', [PracticaController::class, 'registrar_practica']);
+Route::get('/verificar-registro', [PracticaController::class, 'verificar_registro']);
+Route::post('/editar-practica', [PracticaController::class, 'editar_practica']);

@@ -349,5 +349,11 @@
         }
     },
   };
-  </script>
+</script>
+<style>
+    label{
+        color: #2c4a73;
+        font-weight: bold;
+    }
+</style>
   

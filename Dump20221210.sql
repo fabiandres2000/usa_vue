@@ -34,7 +34,7 @@ CREATE TABLE `asignacion_practica` (
   `arl` varchar(450) DEFAULT NULL,
   `comunicado` varchar(450) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `asignacion_practica` (
 
 LOCK TABLES `asignacion_practica` WRITE;
 /*!40000 ALTER TABLE `asignacion_practica` DISABLE KEYS */;
+INSERT INTO `asignacion_practica` VALUES (6,'2','1','2','2','Campo Educativo','2022-12-20','2023-01-07','arl_2022_12_20_01_31_09_PM.pdf','comunicado_2022_12_20_01_31_09_PM.pdf'),(7,'3','2','3','2','Campo Educativo','2022-12-21','2022-12-31','arl_2022_12_20_01_31_12_PM.pdf','comunicado_2022_12_20_01_31_12_PM.pdf');
 /*!40000 ALTER TABLE `asignacion_practica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +79,7 @@ CREATE TABLE `convenio` (
 
 LOCK TABLES `convenio` WRITE;
 /*!40000 ALTER TABLE `convenio` DISABLE KEYS */;
-INSERT INTO `convenio` VALUES (1,'Centro Comercial Guatapuri','1344234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_02_08_PM.pdf','2022-12-09','2022-12-17','Si','Si','Si','No','No','1'),(2,'Mayales Plaza','134423443234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_05_12_PM.pdf','2022-12-16','2022-12-24','No','No','Si','No','Si','1'),(3,'Universidad Sergio Arboleda','546546456','MZ 2 CASA 8 TAYRONA','Fabian Quintero Mendez','documento2022_12_09_10_53_58_PM.pdf','2022-11-27','2022-12-10','Si','No','No','Si','No','1'),(4,'ICBF','7567567567','Barrio Centro','Cristian Quintero','documento2022_12_09_10_34_40_PM.pdf','2022-12-01','2022-12-08','Si','Si','Si','Si','Si','1');
+INSERT INTO `convenio` VALUES (1,'Centro Comercial Guatapuri','1344234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_19_08_06_24_PM.pdf','2022-12-09','2022-12-31','Si','Si','Si','No','No','1'),(2,'Mayales Plaza','134423443234','MZ 2 CASA 8 TAYRONA','Fabian Quintero','documento2022_12_09_08_05_12_PM.pdf','2022-12-16','2022-12-24','No','No','Si','No','Si','1'),(3,'Universidad Sergio Arboleda','546546456','MZ 2 CASA 8 TAYRONA','Fabian Quintero Mendez','documento2022_12_09_10_53_58_PM.pdf','2022-11-27','2022-12-10','Si','No','No','Si','No','1'),(4,'ICBF','7567567567','Barrio Centro','Cristian Quintero','documento2022_12_19_08_06_10_PM.pdf','2022-12-01','2023-01-12','Si','Si','Si','Si','Si','1');
 /*!40000 ALTER TABLE `convenio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +109,7 @@ CREATE TABLE `estudiante` (
 
 LOCK TABLES `estudiante` WRITE;
 /*!40000 ALTER TABLE `estudiante` DISABLE KEYS */;
-INSERT INTO `estudiante` VALUES (2,'1008','Andres Quintero','3042065930','IX','2029-2','0','0'),(3,'1009','Andres Quintero 2','3042065930','IX','2029-2','0','0'),(4,'1010','Andres Quintero 3','3042065930','IX','2029-2','0','0'),(5,'1011','Andres Quintero 4','3042065930','I','2029-2','0','0'),(6,'1012','Andres Quintero 5','3042065930','II','2029-2','0','0'),(7,'1013','Andres Quintero 6','3042065930','IX','2029-2','0','0'),(8,'1014','Andres Quintero 7','3042065930','X','2029-2','0','0'),(9,'1015','Andres Quintero 8','3042065930','X','2029-2','0','0'),(10,'5654','Andres Quintero 9','3042065930','VIII','2029-2','0','0');
+INSERT INTO `estudiante` VALUES (2,'1008','Andres Quintero','3042065930','IX','2029-2','1','0'),(3,'1009','Andres Quintero 2','3042065930','IX','2029-2','1','0'),(4,'1010','Andres Quintero 3','3042065930','IX','2029-2','0','0'),(5,'1011','Andres Quintero 4','3042065930','I','2029-2','0','0'),(6,'1012','Andres Quintero 5','3042065930','II','2029-2','0','0'),(7,'1013','Andres Quintero 6','3042065930','IX','2029-2','0','0'),(8,'1014','Andres Quintero 7','3042065930','X','2029-2','0','0'),(9,'1015','Andres Quintero 8','3042065930','X','2029-2','0','0'),(10,'5654','Andres Quintero 9','3042065930','VIII','2029-2','0','0');
 /*!40000 ALTER TABLE `estudiante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,6 +139,337 @@ CREATE TABLE `observacion` (
 LOCK TABLES `observacion` WRITE;
 /*!40000 ALTER TABLE `observacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `observacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personalidad_calificaciones`
+--
+
+DROP TABLE IF EXISTS `personalidad_calificaciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personalidad_calificaciones` (
+  `id_calificacion` int(11) NOT NULL AUTO_INCREMENT,
+  `correo` text NOT NULL,
+  `Ansiedad` int(11) NOT NULL,
+  `Hostilidad` int(11) NOT NULL,
+  `Depresion` int(11) NOT NULL,
+  `Ansiedad_Social` int(11) NOT NULL,
+  `Impulsividad` int(11) NOT NULL,
+  `Vulnerabilidad` int(11) NOT NULL,
+  `Neuroticismo` int(11) NOT NULL,
+  `Cordialidad` int(11) NOT NULL,
+  `Gregarismo` int(11) NOT NULL,
+  `Asertividad` int(11) NOT NULL,
+  `Actividad` int(11) NOT NULL,
+  `Busqueda_emociones` int(11) NOT NULL,
+  `Emociones_positivas` int(11) NOT NULL,
+  `Extraversion` int(11) NOT NULL,
+  `Fantasia` int(11) NOT NULL,
+  `Estetica` int(11) NOT NULL,
+  `Sentimientos` int(11) NOT NULL,
+  `Acciones` int(11) NOT NULL,
+  `Ideas` int(11) NOT NULL,
+  `Valores` int(11) NOT NULL,
+  `Apertura` int(11) NOT NULL,
+  `Confianza` int(11) NOT NULL,
+  `Franqueza` int(11) NOT NULL,
+  `Altruismo` int(11) NOT NULL,
+  `A_Conciliadora` int(11) NOT NULL,
+  `Modestia` int(11) NOT NULL,
+  `Sensibilidad` int(11) NOT NULL,
+  `Amabilidad` int(11) NOT NULL,
+  `Competencia` int(11) NOT NULL,
+  `Orden` int(11) NOT NULL,
+  `Deber` int(11) NOT NULL,
+  `Logro` int(11) NOT NULL,
+  `Autodisciplina` int(11) NOT NULL,
+  `Deliberacion` int(11) NOT NULL,
+  `Responsabilidad` int(11) NOT NULL,
+  `Negativismo` int(11) NOT NULL,
+  `Aquiescencia` int(11) NOT NULL,
+  `nombre_completo` text NOT NULL,
+  PRIMARY KEY (`id_calificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `personalidad_calificaciones`
+--
+
+LOCK TABLES `personalidad_calificaciones` WRITE;
+/*!40000 ALTER TABLE `personalidad_calificaciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personalidad_calificaciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personalidad_respuestas`
+--
+
+DROP TABLE IF EXISTS `personalidad_respuestas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personalidad_respuestas` (
+  `id_estudiante` varchar(45) NOT NULL,
+  `preg_1` int(11) DEFAULT NULL,
+  `preg_2` int(11) DEFAULT NULL,
+  `preg_3` int(11) DEFAULT NULL,
+  `preg_4` int(11) DEFAULT NULL,
+  `preg_5` int(11) DEFAULT NULL,
+  `preg_6` int(11) DEFAULT NULL,
+  `preg_7` int(11) DEFAULT NULL,
+  `preg_8` int(11) DEFAULT NULL,
+  `preg_9` int(11) DEFAULT NULL,
+  `preg_10` int(11) DEFAULT NULL,
+  `preg_11` int(11) DEFAULT NULL,
+  `preg_12` int(11) DEFAULT NULL,
+  `preg_13` int(11) DEFAULT NULL,
+  `preg_14` int(11) DEFAULT NULL,
+  `preg_15` int(11) DEFAULT NULL,
+  `preg_16` int(11) DEFAULT NULL,
+  `preg_17` int(11) DEFAULT NULL,
+  `preg_18` int(11) DEFAULT NULL,
+  `preg_19` int(11) DEFAULT NULL,
+  `preg_20` int(11) DEFAULT NULL,
+  `preg_21` int(11) DEFAULT NULL,
+  `preg_22` int(11) DEFAULT NULL,
+  `preg_23` int(11) DEFAULT NULL,
+  `preg_24` int(11) DEFAULT NULL,
+  `preg_25` int(11) DEFAULT NULL,
+  `preg_26` int(11) DEFAULT NULL,
+  `preg_27` int(11) DEFAULT NULL,
+  `preg_28` int(11) DEFAULT NULL,
+  `preg_29` int(11) DEFAULT NULL,
+  `preg_30` int(11) DEFAULT NULL,
+  `preg_31` int(11) DEFAULT NULL,
+  `preg_32` int(11) DEFAULT NULL,
+  `preg_33` int(11) DEFAULT NULL,
+  `preg_34` int(11) DEFAULT NULL,
+  `preg_35` int(11) DEFAULT NULL,
+  `preg_36` int(11) DEFAULT NULL,
+  `preg_37` int(11) DEFAULT NULL,
+  `preg_38` int(11) DEFAULT NULL,
+  `preg_39` int(11) DEFAULT NULL,
+  `preg_40` int(11) DEFAULT NULL,
+  `bloque_1` int(11) DEFAULT NULL,
+  `preg_41` int(11) DEFAULT NULL,
+  `preg_42` int(11) DEFAULT NULL,
+  `preg_43` int(11) DEFAULT NULL,
+  `preg_44` int(11) DEFAULT NULL,
+  `preg_45` int(11) DEFAULT NULL,
+  `preg_46` int(11) DEFAULT NULL,
+  `preg_47` int(11) DEFAULT NULL,
+  `preg_48` int(11) DEFAULT NULL,
+  `preg_49` int(11) DEFAULT NULL,
+  `preg_50` int(11) DEFAULT NULL,
+  `preg_51` int(11) DEFAULT NULL,
+  `preg_52` int(11) DEFAULT NULL,
+  `preg_53` int(11) DEFAULT NULL,
+  `preg_54` int(11) DEFAULT NULL,
+  `preg_55` int(11) DEFAULT NULL,
+  `preg_56` int(11) DEFAULT NULL,
+  `preg_57` int(11) DEFAULT NULL,
+  `preg_58` int(11) DEFAULT NULL,
+  `preg_59` int(11) DEFAULT NULL,
+  `preg_60` int(11) DEFAULT NULL,
+  `preg_61` int(11) DEFAULT NULL,
+  `preg_62` int(11) DEFAULT NULL,
+  `preg_63` int(11) DEFAULT NULL,
+  `preg_64` int(11) DEFAULT NULL,
+  `preg_65` int(11) DEFAULT NULL,
+  `preg_66` int(11) DEFAULT NULL,
+  `preg_67` int(11) DEFAULT NULL,
+  `preg_68` int(11) DEFAULT NULL,
+  `preg_69` int(11) DEFAULT NULL,
+  `preg_70` int(11) DEFAULT NULL,
+  `preg_71` int(11) DEFAULT NULL,
+  `preg_72` int(11) DEFAULT NULL,
+  `preg_73` int(11) DEFAULT NULL,
+  `preg_74` int(11) DEFAULT NULL,
+  `preg_75` int(11) DEFAULT NULL,
+  `preg_76` int(11) DEFAULT NULL,
+  `preg_77` int(11) DEFAULT NULL,
+  `preg_78` int(11) DEFAULT NULL,
+  `preg_79` int(11) DEFAULT NULL,
+  `preg_80` int(11) DEFAULT NULL,
+  `bloque_2` int(11) DEFAULT NULL,
+  `preg_81` int(11) DEFAULT NULL,
+  `preg_82` int(11) DEFAULT NULL,
+  `preg_83` int(11) DEFAULT NULL,
+  `preg_84` int(11) DEFAULT NULL,
+  `preg_85` int(11) DEFAULT NULL,
+  `preg_86` int(11) DEFAULT NULL,
+  `preg_87` int(11) DEFAULT NULL,
+  `preg_88` int(11) DEFAULT NULL,
+  `preg_89` int(11) DEFAULT NULL,
+  `preg_90` int(11) DEFAULT NULL,
+  `preg_91` int(11) DEFAULT NULL,
+  `preg_92` int(11) DEFAULT NULL,
+  `preg_93` int(11) DEFAULT NULL,
+  `preg_94` int(11) DEFAULT NULL,
+  `preg_95` int(11) DEFAULT NULL,
+  `preg_96` int(11) DEFAULT NULL,
+  `preg_97` int(11) DEFAULT NULL,
+  `preg_98` int(11) DEFAULT NULL,
+  `preg_99` int(11) DEFAULT NULL,
+  `preg_100` int(11) DEFAULT NULL,
+  `preg_101` int(11) DEFAULT NULL,
+  `preg_102` int(11) DEFAULT NULL,
+  `preg_103` int(11) DEFAULT NULL,
+  `preg_104` int(11) DEFAULT NULL,
+  `preg_105` int(11) DEFAULT NULL,
+  `preg_106` int(11) DEFAULT NULL,
+  `preg_107` int(11) DEFAULT NULL,
+  `preg_108` int(11) DEFAULT NULL,
+  `preg_109` int(11) DEFAULT NULL,
+  `preg_110` int(11) DEFAULT NULL,
+  `preg_111` int(11) DEFAULT NULL,
+  `preg_112` int(11) DEFAULT NULL,
+  `preg_113` int(11) DEFAULT NULL,
+  `preg_114` int(11) DEFAULT NULL,
+  `preg_115` int(11) DEFAULT NULL,
+  `preg_116` int(11) DEFAULT NULL,
+  `preg_117` int(11) DEFAULT NULL,
+  `preg_118` int(11) DEFAULT NULL,
+  `preg_119` int(11) DEFAULT NULL,
+  `preg_120` int(11) DEFAULT NULL,
+  `bloque_3` int(11) DEFAULT NULL,
+  `preg_121` int(11) DEFAULT NULL,
+  `preg_122` int(11) DEFAULT NULL,
+  `preg_123` int(11) DEFAULT NULL,
+  `preg_124` int(11) DEFAULT NULL,
+  `preg_125` int(11) DEFAULT NULL,
+  `preg_126` int(11) DEFAULT NULL,
+  `preg_127` int(11) DEFAULT NULL,
+  `preg_128` int(11) DEFAULT NULL,
+  `preg_129` int(11) DEFAULT NULL,
+  `preg_130` int(11) DEFAULT NULL,
+  `preg_131` int(11) DEFAULT NULL,
+  `preg_132` int(11) DEFAULT NULL,
+  `preg_133` int(11) DEFAULT NULL,
+  `preg_134` int(11) DEFAULT NULL,
+  `preg_135` int(11) DEFAULT NULL,
+  `preg_136` int(11) DEFAULT NULL,
+  `preg_137` int(11) DEFAULT NULL,
+  `preg_138` int(11) DEFAULT NULL,
+  `preg_139` int(11) DEFAULT NULL,
+  `preg_140` int(11) DEFAULT NULL,
+  `preg_141` int(11) DEFAULT NULL,
+  `preg_142` int(11) DEFAULT NULL,
+  `preg_143` int(11) DEFAULT NULL,
+  `preg_144` int(11) DEFAULT NULL,
+  `preg_145` int(11) DEFAULT NULL,
+  `preg_146` int(11) DEFAULT NULL,
+  `preg_147` int(11) DEFAULT NULL,
+  `preg_148` int(11) DEFAULT NULL,
+  `preg_149` int(11) DEFAULT NULL,
+  `preg_150` int(11) DEFAULT NULL,
+  `preg_151` int(11) DEFAULT NULL,
+  `preg_152` int(11) DEFAULT NULL,
+  `preg_153` int(11) DEFAULT NULL,
+  `preg_154` int(11) DEFAULT NULL,
+  `preg_155` int(11) DEFAULT NULL,
+  `preg_156` int(11) DEFAULT NULL,
+  `preg_157` int(11) DEFAULT NULL,
+  `preg_158` int(11) DEFAULT NULL,
+  `preg_159` int(11) DEFAULT NULL,
+  `preg_160` int(11) DEFAULT NULL,
+  `bloque_4` int(11) DEFAULT NULL,
+  `preg_161` int(11) DEFAULT NULL,
+  `preg_162` int(11) DEFAULT NULL,
+  `preg_163` int(11) DEFAULT NULL,
+  `preg_164` int(11) DEFAULT NULL,
+  `preg_165` int(11) DEFAULT NULL,
+  `preg_166` int(11) DEFAULT NULL,
+  `preg_167` int(11) DEFAULT NULL,
+  `preg_168` int(11) DEFAULT NULL,
+  `preg_169` int(11) DEFAULT NULL,
+  `preg_170` int(11) DEFAULT NULL,
+  `preg_171` int(11) DEFAULT NULL,
+  `preg_172` int(11) DEFAULT NULL,
+  `preg_173` int(11) DEFAULT NULL,
+  `preg_174` int(11) DEFAULT NULL,
+  `preg_175` int(11) DEFAULT NULL,
+  `preg_176` int(11) DEFAULT NULL,
+  `preg_177` int(11) DEFAULT NULL,
+  `preg_178` int(11) DEFAULT NULL,
+  `preg_179` int(11) DEFAULT NULL,
+  `preg_180` int(11) DEFAULT NULL,
+  `preg_181` int(11) DEFAULT NULL,
+  `preg_182` int(11) DEFAULT NULL,
+  `preg_183` int(11) DEFAULT NULL,
+  `preg_184` int(11) DEFAULT NULL,
+  `preg_185` int(11) DEFAULT NULL,
+  `preg_186` int(11) DEFAULT NULL,
+  `preg_187` int(11) DEFAULT NULL,
+  `preg_188` int(11) DEFAULT NULL,
+  `preg_189` int(11) DEFAULT NULL,
+  `preg_190` int(11) DEFAULT NULL,
+  `preg_191` int(11) DEFAULT NULL,
+  `preg_192` int(11) DEFAULT NULL,
+  `preg_193` int(11) DEFAULT NULL,
+  `preg_194` int(11) DEFAULT NULL,
+  `preg_195` int(11) DEFAULT NULL,
+  `preg_196` int(11) DEFAULT NULL,
+  `preg_197` int(11) DEFAULT NULL,
+  `preg_198` int(11) DEFAULT NULL,
+  `preg_199` int(11) DEFAULT NULL,
+  `preg_200` int(11) DEFAULT NULL,
+  `bloque_5` int(11) DEFAULT NULL,
+  `preg_201` int(11) DEFAULT NULL,
+  `preg_202` int(11) DEFAULT NULL,
+  `preg_203` int(11) DEFAULT NULL,
+  `preg_204` int(11) DEFAULT NULL,
+  `preg_205` int(11) DEFAULT NULL,
+  `preg_206` int(11) DEFAULT NULL,
+  `preg_207` int(11) DEFAULT NULL,
+  `preg_208` int(11) DEFAULT NULL,
+  `preg_209` int(11) DEFAULT NULL,
+  `preg_210` int(11) DEFAULT NULL,
+  `preg_211` int(11) DEFAULT NULL,
+  `preg_212` int(11) DEFAULT NULL,
+  `preg_213` int(11) DEFAULT NULL,
+  `preg_214` int(11) DEFAULT NULL,
+  `preg_215` int(11) DEFAULT NULL,
+  `preg_216` int(11) DEFAULT NULL,
+  `preg_217` int(11) DEFAULT NULL,
+  `preg_218` int(11) DEFAULT NULL,
+  `preg_219` int(11) DEFAULT NULL,
+  `preg_220` int(11) DEFAULT NULL,
+  `preg_221` int(11) DEFAULT NULL,
+  `preg_222` int(11) DEFAULT NULL,
+  `preg_223` int(11) DEFAULT NULL,
+  `preg_224` int(11) DEFAULT NULL,
+  `preg_225` int(11) DEFAULT NULL,
+  `preg_226` int(11) DEFAULT NULL,
+  `preg_227` int(11) DEFAULT NULL,
+  `preg_228` int(11) DEFAULT NULL,
+  `preg_229` int(11) DEFAULT NULL,
+  `preg_230` int(11) DEFAULT NULL,
+  `preg_231` int(11) DEFAULT NULL,
+  `preg_232` int(11) DEFAULT NULL,
+  `preg_233` int(11) DEFAULT NULL,
+  `preg_234` int(11) DEFAULT NULL,
+  `preg_235` int(11) DEFAULT NULL,
+  `preg_236` int(11) DEFAULT NULL,
+  `preg_237` int(11) DEFAULT NULL,
+  `preg_238` int(11) DEFAULT NULL,
+  `preg_239` int(11) DEFAULT NULL,
+  `preg_240` int(11) DEFAULT NULL,
+  `bloque_6` int(11) DEFAULT NULL,
+  `estado_calificado` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_estudiante`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `personalidad_respuestas`
+--
+
+LOCK TABLES `personalidad_respuestas` WRITE;
+/*!40000 ALTER TABLE `personalidad_respuestas` DISABLE KEYS */;
+INSERT INTO `personalidad_respuestas` VALUES ('2',0,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4,4,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,3,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,3,1,4,1,4,3,4,4,4,4,4,4,4,4,4,4,4,4,1,3,1,1,1,1,1,1,4,4,4,4,4,4,4,1,1,1,1,1,2,4,4,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0);
+/*!40000 ALTER TABLE `personalidad_respuestas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -223,7 +555,7 @@ CREATE TABLE `sociodemografico` (
   `estudios_padre` varchar(400) DEFAULT NULL,
   `dedicacion_padre` varchar(400) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,6 +564,7 @@ CREATE TABLE `sociodemografico` (
 
 LOCK TABLES `sociodemografico` WRITE;
 /*!40000 ALTER TABLE `sociodemografico` DISABLE KEYS */;
+INSERT INTO `sociodemografico` VALUES (1,'2','andres quintero','IX','TI','1008','23','Masulino','Estrato 1','3042065930','valledupar','1','Madre','Si','Una vez al día','No','1 a 8','Santa Marta','Padre-Madre-Hermano(s)','Semanalmente','Hasta media hora','Pasear-Practicar deporte-Salir con amigos','2','No','no','Sopa-Verduras-Papa','234','4.8','2022-2','34','Bachiller','Ama de casa','34','No es bachiller','Independiente');
 /*!40000 ALTER TABLE `sociodemografico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,7 +596,7 @@ CREATE TABLE `tutor_sp` (
 
 LOCK TABLES `tutor_sp` WRITE;
 /*!40000 ALTER TABLE `tutor_sp` DISABLE KEYS */;
-INSERT INTO `tutor_sp` VALUES (2,'Blanca','del carmen','grovveip4213412341234@gmail.com','3042065930','4523452345','Campo Educativo','2022-II','1','1'),(3,'kariako Jose','Mendez Quintero','kariako.mendez@gmail.com','2134234234','34523452345','Campo Social','2022-I','2','1'),(4,'Jorge','Restrepo','joge@gmail.com','3042065930','1008','Campo Social','2022-II','2','1'),(5,'patricia','del carmen','psti@gmail.com','3042065930','546234656','Campo Social','2022-II','2','1'),(6,'Cristian Jose','Quintero Mendez','cristian@usa.edu.co','3042065930','1009','Campo Educativo','2022-II','1','1');
+INSERT INTO `tutor_sp` VALUES (2,'Blanca','del carmen','grovveip4213412341234@gmail.com','3042065930','4523452345','Campo Educativo','2022-I','1','1'),(3,'kariako Jose','Mendez Quintero','kariako.mendez@gmail.com','2134234234','34523452345','Campo Social','2022-I','2','1'),(4,'Jorge','Restrepo','joge@gmail.com','3042065930','1008','Campo Social','2022-II','2','1'),(5,'patricia','del carmen','psti@gmail.com','3042065930','546234656','Campo Organizacional','2022-II','2','1'),(6,'Cristian Jose','Quintero Mendez','cristian@usa.edu.co','3042065930','1009','Campo Educativo','2022-II','1','1');
 /*!40000 ALTER TABLE `tutor_sp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,4 +672,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-19  9:09:28
+-- Dump completed on 2022-12-22 17:09:18

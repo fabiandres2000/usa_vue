@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PracticaController;
+use App\Http\Controllers\EstudianteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,12 @@ Route::get('/verificar-asignacion', [PracticaController::class, 'verificar_asign
 Route::post('/registrar-practica', [PracticaController::class, 'registrar_practica']);
 Route::get('/verificar-registro', [PracticaController::class, 'verificar_registro']);
 Route::post('/editar-practica', [PracticaController::class, 'editar_practica']);
+
+Route::get('/consultar-estudiante', [EstudianteController::class, 'consultar_estudiante']);
+Route::post('/guardar-sociodemografico', [EstudianteController::class, 'guardar_sociodemografico']);
+Route::get('/consultar-socio', [EstudianteController::class, 'consultar_socio']);
+
+
+Route::get('/verificar-paso-personalidad', [EstudianteController::class, 'verificar_paso_personalidad']);
+Route::post('/guardar-respuesta-personalidad', [EstudianteController::class, 'guardar_respuesta_personalidad']);
+Route::get('/calificar-personalidad', [EstudianteController::class, 'calificar_personalidad']);

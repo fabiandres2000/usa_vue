@@ -25,6 +25,8 @@ class VerifyCsrfToken extends Middleware
         '/editar-tutor-sp',
         '/asignar-practica',
         '/registrar-practica',
-        '/editar-practica'
+        '/editar-practica',
+        '/guardar-sociodemografico',
+        '/guardar-respuesta-personalidad'
     ];
 }

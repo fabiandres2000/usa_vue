@@ -76,22 +76,20 @@ export default {
         child: [
               {
                 href: "/estudiante/caracterizacion",
-                title: 'Caracterización'
+                title: 'Caracterización',
+                icon: "fa-sharp fa-solid fa-circle"
               },
               {
                 href: '/charts/sublink',
-                title: 'Vocacional'
+                title: 'Vocacional',
+                icon: "fa-sharp fa-solid fa-circle"
               },
               {
-                href: '/charts/sublink',
-                title: 'Personalidad'
+                href: '/estudiante/test-personalidad',
+                title: 'Personalidad',
+                icon: "fa-sharp fa-solid fa-circle"
               }
           ]
-      },
-      {
-        title: "Test 1",
-        icon: "fa-solid fa-list-check",
-        href: "/admin/pages/alerts"
       },
       {
         title: "Perfil",

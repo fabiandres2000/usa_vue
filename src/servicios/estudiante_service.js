@@ -71,3 +71,7 @@ export function guardar_respuesta_personalidad($data) {
 export function calificar_personalidad($id) {
     return http().get('/calificar-personalidad?id='+$id);
 }
+
+export function detalle_personalidad($id) {
+    return http().get('/detalle-personalidad?id='+$id);
+}

@@ -313,15 +313,15 @@ class EstudianteController extends Controller
         $Deliberacion = (4-$respuestas->preg_30)+$respuestas->preg_60+(4-$respuestas->preg_90)+$respuestas->preg_120+(4-$respuestas->preg_150)+$respuestas->preg_180+$respuestas->preg_210+$respuestas->preg_240;
         $Responsabilidad = $Competencia+$Orden+$Deber+$Logro+$Autodisciplina+$Deliberacion;
 
-
+        
         $Negativismo = 0;
         $Aquiescencia = 0;
 
-        $respuestas_a = $respuestas->attributesToArray();
+        $respuestas_a = array();
 
-        return response()->json([
-            'respuesta' => $respuestas_a
-        ]);
+        foreach ($respuestas as $key) {
+            $respuestas_a[] = $key;
+        }
 
         for ($i=1; $i < 248; $i++) { 
             if($i != 41 && $i != 82  && $i != 123  && $i != 164  && $i != 205  && $i != 246){
@@ -334,11 +334,82 @@ class EstudianteController extends Controller
             }
         }
 
-        $sql2 = "INSERT INTO `calificaciones` (`id_estudiante`, `Ansiedad`, `Hostilidad`, `Depresion`, `Ansiedad_Social`, `Impulsividad`, `Vulnerabilidad`, `Neuroticismo`, `Cordialidad`, `Gregarismo`, `Asertividad`, `Actividad`, `Busqueda_emociones`, `Emociones_positivas`, `Extraversion`, `Fantasia`, `Estetica`, `Sentimientos`, `Acciones`, `Ideas`, `Valores`, `Apertura`, `Confianza`, `Franqueza`, `Altruismo`, `A_Conciliadora`, `Modestia`, `Sensibilidad`, `Amabilidad`, `Competencia`, `Orden`, `Deber`, `Logro`, `Autodisciplina`, `Deliberacion`, `Responsabilidad`, `Negativismo`, `Aquiescencia`) VALUES ($id_estudiante , $Ansiedad , $Hostilidad , $Depresion , $Ansiedad_Social , $Impulsividad , $Vulnerabilidad , $Neuroticismo , $Cordialidad , $Gregarismo , $Asertividad , $Actividad , $Busqueda_emociones , $Emociones_positivas , $Extraversion , $Fantasia , $Estetica , $Sentimientos , $Acciones , $Ideas , $Valores , $Apertura , $Confianza , $Franqueza , $Altruismo , $A_Conciliadora , $Modestia , $Sensibilidad , $Amabilidad , $Competencia , $Orden , $Deber , $Logro , $Autodisciplina , $Deliberacion , $Responsabilidad , $Negativismo , $Aquiescencia)";
-        $sql3 ="UPDATE `respuestas` SET `estado_calificado` = 1 WHERE `id_estudiante` = $id_estudiante";
+        $insert_cal = DB::connection("mysql")
+        ->table("personalidad_calificaciones")
+        ->insert([
+            'id_estudiante' => $data["id"],
+            'Ansiedad' => $Ansiedad,
+            'Hostilidad'=> $Hostilidad,
+            'Depresion'=> $Depresion,
+            'Ansiedad_Social'=> $Ansiedad_Social,
+            'Impulsividad'=> $Impulsividad,
+            'Vulnerabilidad'=> $Vulnerabilidad,
+            'Neuroticismo'=> $Neuroticismo,
+            'Cordialidad'=> $Cordialidad,
+            'Gregarismo'=> $Gregarismo,
+            'Asertividad'=> $Asertividad,
+            'Actividad' => $Actividad,
+            'Busqueda_emociones' => $Busqueda_emociones,
+            'Emociones_positivas'=> $Emociones_positivas,
+            'Extraversion'=> $Extraversion,
+            'Fantasia'=> $Fantasia,
+            'Estetica'=> $Estetica,
+            'Sentimientos'=> $Sentimientos,
+            'Acciones'=> $Acciones,
+            'Ideas'=> $Ideas,
+            'Valores'=> $Valores,
+            'Apertura'=> $Apertura,
+            'Confianza' => $Confianza,
+            'Franqueza'=> $Franqueza,
+            'Altruismo'=> $Altruismo,
+            'A_Conciliadora'=> $A_Conciliadora,
+            'Modestia'=> $Modestia,
+            'Sensibilidad'=> $Sensibilidad,
+            'Amabilidad'=> $Amabilidad,
+            'Competencia'=> $Competencia,
+            'Orden'=> $Orden,
+            'Deber'=> $Deber,
+            'Logro'=> $Logro,
+            'Autodisciplina'=> $Autodisciplina,
+            'Deliberacion'=> $Deliberacion,
+            'Responsabilidad'=> $Responsabilidad,
+            'Negativismo'=> $Negativismo,
+            'Aquiescencia'=> $Aquiescencia,
+        ]);
+
+        if($insert_cal){     
+            DB::connection("mysql")
+            ->table("personalidad_respuestas")
+            ->where("id_estudiante", $data["id"])
+            ->update([
+                'estado_calificado' => 1,
+            ]);
+            
+            return response()->json([
+                'respuesta' => "Test Calificado Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+    }
+
+    public function detalle_personalidad(){
+
+        $data = request()->all();
+
+        $detalle = DB::connection("mysql")
+        ->table("personalidad_calificaciones")
+        ->where("id_estudiante", $data["id"])
+        ->select("*")
+        ->first();
 
         return response()->json([
-            'respuesta' => $respuestas_a['preg_1'],
+            'detalle' => $detalle,
         ]);
     }
 }

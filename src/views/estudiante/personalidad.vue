@@ -2338,6 +2338,7 @@
                                             <div class="col-lg-9" style="padding: 15px 10px;">
                                                 <br>
                                                 <h1 style="font-size: 25px;font-weight: bold;color: #487449;">Ya usted ha finalizado  este cuestionario.</h1>
+                                                <button @click="ver_resumen" class="btn btn-success" style="font-weight: bold;">Ver Resumen</button>
                                             </div>
                                             <div class="col-lg-3" style="text-align: right">
                                                 <img style="width: 30%;" src="../../assets/check.png" alt="ok">
@@ -2367,7 +2368,9 @@
     name: "Personalidad",
     data: () => ({  
         id_estudiante: "",
-        estudiante: {},
+        estudiante: {
+            nombre: "",
+        },
         paso: 0
     }),
     components: {},
@@ -2413,8 +2416,14 @@
         },
         async calificar_personalidad(){
             await estudianteService.calificar_personalidad(this.id_estudiante).then(respuesta => {
-                this.estudiante = respuesta.data.estudiante;
+                if(respuesta.data.codigo == 0){
+                    this.$swal('Error...', respuesta.data.respuesta, 'error');
+                }
+                this.verificar_paso_personalidad();
             });
+        },
+        ver_resumen(){
+            this.$router.push({ name: "DetallePersonalidad", params: {idEstudiante: this.id_estudiante}})
         }
     }
   };

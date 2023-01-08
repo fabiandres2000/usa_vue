@@ -90,6 +90,12 @@ export default new Router({
                     path: '/estudiante/test-personalidad',
                     component: () => import('@/views/estudiante/personalidad'),
                 },
+
+                {
+                    name: 'DetallePersonalidad',
+                    path: '/estudiante/detalle-personalidad/:idEstudiante',
+                    component: () => import('@/views/estudiante/detallePersonalidad'),
+                },
             ]
         },
     ],

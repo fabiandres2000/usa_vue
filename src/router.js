@@ -96,6 +96,12 @@ export default new Router({
                     path: '/estudiante/detalle-personalidad/:idEstudiante',
                     component: () => import('@/views/estudiante/detallePersonalidad'),
                 },
+
+                {
+                    name: 'EstudiantesPersonalidad',
+                    path: '/decanatura/estudiantes-personalidad',
+                    component: () => import('@/views/decanatura/estudiantesPersonalidad'),
+                },
             ]
         },
     ],

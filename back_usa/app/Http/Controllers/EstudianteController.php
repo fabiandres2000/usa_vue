@@ -412,4 +412,19 @@ class EstudianteController extends Controller
             'detalle' => $detalle,
         ]);
     }
+
+    public function listar_estudiantes_personalidad(){
+
+        $data = request()->all();
+
+        $listaep = DB::connection("mysql")
+        ->table("personalidad_calificaciones")
+        ->join("estudiante","estudiante.id","personalidad_calificaciones.id_estudiante")
+        ->select("personalidad_calificaciones.*", "estudiante.*")
+        ->get();
+
+        return response()->json([
+            'listaep' => $listaep,
+        ]);
+    }
 }

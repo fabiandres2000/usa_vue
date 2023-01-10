@@ -130,6 +130,11 @@ export default {
         icon: "fa-solid fa-unlock-keyhole",
         href: "/admin/asignar-permiso"
       },
+      {
+        title: "Test Personalidad",
+        icon: "fa-solid fa-comments",
+        href: "/decanatura/estudiantes-personalidad"
+      },
     ],
     imagen: "pic.png",
     nombre: "",

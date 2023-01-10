@@ -267,8 +267,8 @@
                                             <td style="text-align: center;">Aquiescencia</td>
                                             <td style="text-align: center;">{{detalle.Aquiescencia}}</td>
                                             <td>
-                                                <p v-if="detalle.Negativismo >= 150">Aquiescencia</p>
-                                                <p v-if="detalle.Negativismo < 150">No Aquiescencia</p>                             
+                                                <p v-if="detalle.Aquiescencia >= 150">Aquiescencia</p>
+                                                <p v-if="detalle.Aquiescencia < 150">No Aquiescencia</p>                             
                                             </td>  
                                         </tr>
                                         <tr>
@@ -282,6 +282,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <br>
+                                <br>
+                                <button  @click="$router.go(-1)" class="btn btn-danger" style="width: 100%"><i class="fa-solid fa-arrow-left"></i> volver</button>
                             </div>
                         </div>
                     </v-card-text>

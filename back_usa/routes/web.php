@@ -59,3 +59,4 @@ Route::get('/verificar-paso-personalidad', [EstudianteController::class, 'verifi
 Route::post('/guardar-respuesta-personalidad', [EstudianteController::class, 'guardar_respuesta_personalidad']);
 Route::get('/calificar-personalidad', [EstudianteController::class, 'calificar_personalidad']);
 Route::get('/detalle-personalidad', [EstudianteController::class, 'detalle_personalidad']);
+Route::get('/listar-estudiantes-personalidad', [EstudianteController::class, 'listar_estudiantes_personalidad']);

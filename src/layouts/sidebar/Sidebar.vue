@@ -136,6 +136,14 @@ export default {
         href: "/decanatura/estudiantes-personalidad"
       },
     ],
+    itemTutor:[
+      {
+        title: "Asignaciones",
+        icon: "fa-solid fa-people-arrows",
+        href: "/tutor/mis-asignaciones"
+      },
+      
+    ],
     imagen: "pic.png",
     nombre: "",
     correo: "",
@@ -176,6 +184,12 @@ export default {
         break;
         case "Practicas":
           this.items = this.itemsPracticas;
+        break;
+        case "Tutor SP":
+          this.items = this.itemTutor;
+        break;
+        case "Tutor USA":
+          this.items = this.itemTutor;
         break;
         default:
         break;

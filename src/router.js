@@ -102,6 +102,12 @@ export default new Router({
                     path: '/decanatura/estudiantes-personalidad',
                     component: () => import('@/views/decanatura/estudiantesPersonalidad'),
                 },
+
+                {
+                    name: 'AsignacionesTutor',
+                    path: '/tutor/mis-asignaciones',
+                    component: () => import('@/views/tutor/misAsignaciones'),
+                },
             ]
         },
     ],

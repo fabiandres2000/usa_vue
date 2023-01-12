@@ -60,3 +60,5 @@ Route::post('/guardar-respuesta-personalidad', [EstudianteController::class, 'gu
 Route::get('/calificar-personalidad', [EstudianteController::class, 'calificar_personalidad']);
 Route::get('/detalle-personalidad', [EstudianteController::class, 'detalle_personalidad']);
 Route::get('/listar-estudiantes-personalidad', [EstudianteController::class, 'listar_estudiantes_personalidad']);
+
+Route::get('/tutor/mis-asignaciones', [PracticaController::class, 'mis_asignaciones']);

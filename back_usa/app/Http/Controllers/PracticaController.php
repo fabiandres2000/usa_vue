@@ -947,4 +947,37 @@ class PracticaController extends Controller
         }
     }
     #endregion practicas
+
+    public function mis_asignaciones(){
+
+        $data = request()->all();
+
+        if($data["tipo"] == 1){
+            $asignaciones = DB::connection("mysql")
+            ->table("asignacion_practica")
+            ->join("estudiante","estudiante.id","asignacion_practica.id_estudiante")
+            ->where("asignacion_practica.id_tutor_sp", $data["id"])
+            ->select("asignacion_practica.*","estudiante.nombre","estudiante.semestre","estudiante.cedula")
+            ->get();
+        }else{
+            $asignaciones = DB::connection("mysql")
+            ->table("asignacion_practica")
+            ->join("estudiante","estudiante.id","asignacion_practica.id_estudiante")
+            ->where("asignacion_practica.id_tutor_usa", $data["id"])
+            ->select("asignacion_practica.*","estudiante.nombre","estudiante.semestre","estudiante.cedula")
+            ->get();
+        }
+
+        foreach ($asignaciones as $key) {
+           $key->practica = DB::connection("mysql")
+           ->table("practica")
+           ->where("id_estudiante", $key->id_estudiante)
+           ->select("practica.*")
+           ->first();
+        }
+        
+        return response()->json([
+            'asignaciones' => $asignaciones,
+        ]);
+    }
 }

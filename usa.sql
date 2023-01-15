@@ -125,11 +125,13 @@ CREATE TABLE `observacion` (
   `id_practica` varchar(400) DEFAULT NULL,
   `observaciones` longtext DEFAULT NULL,
   `archivo` varchar(400) DEFAULT NULL,
-  `fecha_observacion` varchar(48) DEFAULT NULL,
+  `fecha_observacion` varchar(408) DEFAULT NULL,
   `hora_observacion` varchar(400) DEFAULT NULL,
-  `usuario_realiza` varchar(45) DEFAULT NULL,
+  `id_tutor` varchar(405) DEFAULT NULL,
+  `tipo` varchar(405) DEFAULT NULL,
+  `tipo_obs` varchar(405) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,6 +140,7 @@ CREATE TABLE `observacion` (
 
 LOCK TABLES `observacion` WRITE;
 /*!40000 ALTER TABLE `observacion` DISABLE KEYS */;
+INSERT INTO `observacion` VALUES (1,'1','prueba de correcciones','observacion_2023_01_15_08_02_46_PM.pdf','15-01-2023','08:02:46','2','USA','Tutor Universidad Sergio Arboleda'),(2,'1','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s','observacion_2023_01_15_08_03_16_PM.pdf','15-01-2023','08:03:16','2','USA','Tutor Universidad Sergio Arboleda'),(3,'2','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum','observacion_2023_01_15_08_03_46_PM.pdf','15-01-2023','08:03:46','2','USA','Tutor Universidad Sergio Arboleda');
 /*!40000 ALTER TABLE `observacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +153,7 @@ DROP TABLE IF EXISTS `personalidad_calificaciones`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personalidad_calificaciones` (
   `id_calificacion` int(11) NOT NULL AUTO_INCREMENT,
-  `correo` text NOT NULL,
+  `id_estudiante` text NOT NULL,
   `Ansiedad` int(11) NOT NULL,
   `Hostilidad` int(11) NOT NULL,
   `Depresion` int(11) NOT NULL,
@@ -188,9 +191,8 @@ CREATE TABLE `personalidad_calificaciones` (
   `Responsabilidad` int(11) NOT NULL,
   `Negativismo` int(11) NOT NULL,
   `Aquiescencia` int(11) NOT NULL,
-  `nombre_completo` text NOT NULL,
   PRIMARY KEY (`id_calificacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,6 +201,7 @@ CREATE TABLE `personalidad_calificaciones` (
 
 LOCK TABLES `personalidad_calificaciones` WRITE;
 /*!40000 ALTER TABLE `personalidad_calificaciones` DISABLE KEYS */;
+INSERT INTO `personalidad_calificaciones` VALUES (1,'2',20,17,14,17,16,16,100,14,20,13,17,19,16,99,15,17,18,13,20,12,95,18,15,16,15,16,17,97,17,15,15,16,16,21,100,190,40),(2,'3',18,14,10,14,17,16,89,12,17,16,15,12,17,89,18,14,13,18,14,16,93,14,18,13,18,16,13,92,14,18,14,15,16,14,91,227,0);
 /*!40000 ALTER TABLE `personalidad_calificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -468,7 +471,7 @@ CREATE TABLE `personalidad_respuestas` (
 
 LOCK TABLES `personalidad_respuestas` WRITE;
 /*!40000 ALTER TABLE `personalidad_respuestas` DISABLE KEYS */;
-INSERT INTO `personalidad_respuestas` VALUES ('2',0,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4,4,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,4,4,3,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,3,1,4,1,4,3,4,4,4,4,4,4,4,4,4,4,4,4,1,3,1,1,1,1,1,1,4,4,4,4,4,4,4,1,1,1,1,1,2,4,4,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0);
+INSERT INTO `personalidad_respuestas` VALUES ('2',0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,1,1,2,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,4,4,4,4,4,4,3,4,4,4,4,4,3,4,4,4,4,4,4,4,3,4,4,1,1),('3',0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,0,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,2,1,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,1),('undefined',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0);
 /*!40000 ALTER TABLE `personalidad_respuestas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -499,7 +502,7 @@ CREATE TABLE `practica` (
   `excel_2` varchar(400) DEFAULT NULL,
   `id_estudiante` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -508,6 +511,7 @@ CREATE TABLE `practica` (
 
 LOCK TABLES `practica` WRITE;
 /*!40000 ALTER TABLE `practica` DISABLE KEYS */;
+INSERT INTO `practica` VALUES (1,'Andres Quintero','X','2023-1','prueba de practicas 2','1','2','3.0','2','4.0','practica2023_01_10_04_23_57_PM.pdf','si','Ninguno editado','excel_1_R2023_01_10_04_23_57_PM.xlsx','si','Ninguno editado x 2','excel_2_R2023_01_10_04_23_57_PM.xlsx',2),(2,'Andres Quintero 2','X','2029-2','prueba de practicas 23423423','2','3','5','2','5','practica2023_01_13_01_56_26_AM.pdf','no','Ninguno','','si','Ninguno editado x 2','excel_2_R2023_01_13_01_56_26_AM.xlsx',3);
 /*!40000 ALTER TABLE `practica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -659,7 +663,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin','admin@usa.edu.co','ee61e766467546320854c3446ccde3d4','pic.png','Decanatura',NULL,NULL,NULL),(19,'Andres Quintero','grovveip@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','2',NULL,NULL),(20,'Andres Quintero 2','grovveip2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','3',NULL,NULL),(21,'Andres Quintero 3','grovveip3@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','4',NULL,NULL),(22,'Andres Quintero 4','grovveip4@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','5',NULL,NULL),(23,'Andres Quintero 5','grovveip5@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','6',NULL,NULL),(24,'Andres Quintero 6','grovveip6@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','7',NULL,NULL),(25,'Andres Quintero 7','grovveip7@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','8',NULL,NULL),(26,'Andres Quintero 8','grovveip8@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','9',NULL,NULL),(27,'Andres Quintero 9','grovveip9@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','10',NULL,NULL),(31,'Fabian Quintero','practicas@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Practicas',NULL,NULL,NULL),(42,'Blanca Mendez','fab.mendez.18@gmail.com','c7e4ec9f7f4558f5e01313dc9fb0b493','pic.png','Tutor USA',NULL,'1',NULL),(43,'Andres Restrepo Gonzales','andres@gmail.com','27bbc4209578edb3d1ae5f152e424b33','pic.png','Tutor USA',NULL,'2',NULL),(44,'Prueba Mendez','grovveip22341234@gmail.com','714ca2ce6fa3a44fecfef7507229c533','pic.png','Tutor USA',NULL,'3',NULL),(45,'Blanca del carmen','grovveip4213412341234@gmail.com','1a051675276d801780eeb6bed2aaf766','pic.png','Tutor SP',NULL,NULL,'2'),(46,'kariako Jose Mendez Quintero','kariako.mendez@gmail.com','551c74da96b286f1fa4fc0bf81b6406d','pic.png','Tutor SP',NULL,NULL,'3'),(47,'Jorge Restrepo','joge@gmail.com','5daa912a54ec47d555d1302c5c484a8e','pic.png','Tutor SP',NULL,NULL,'4'),(48,'patricia del carmen','psti@gmail.com','2297355e4a641b1808a96a18b8ff8886','pic.png','Tutor SP',NULL,NULL,'5'),(49,'Cristian Jose Quintero Mendez','cristian@usa.edu.co','3107b292a7af26090ffa51167cd76a06','pic.png','Tutor SP',NULL,NULL,'6');
+INSERT INTO `usuario` VALUES (1,'Admin','admin@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Decanatura',NULL,NULL,NULL),(19,'Andres Quintero','grovveip@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','2',NULL,NULL),(20,'Andres Quintero 2','grovveip2@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','3',NULL,NULL),(21,'Andres Quintero 3','grovveip3@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','4',NULL,NULL),(22,'Andres Quintero 4','grovveip4@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','5',NULL,NULL),(23,'Andres Quintero 5','grovveip5@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','6',NULL,NULL),(24,'Andres Quintero 6','grovveip6@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','7',NULL,NULL),(25,'Andres Quintero 7','grovveip7@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','8',NULL,NULL),(26,'Andres Quintero 8','grovveip8@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','9',NULL,NULL),(27,'Andres Quintero 9','grovveip9@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Estudiante','10',NULL,NULL),(31,'Fabian Quintero','practicas@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Practicas',NULL,NULL,NULL),(42,'Blanca Mendez','fab.mendez.18@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor USA',NULL,'1',NULL),(43,'Andres Restrepo Gonzales','andres@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor USA',NULL,'2',NULL),(44,'Prueba Mendez','grovveip22341234@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor USA',NULL,'3',NULL),(45,'Blanca del carmen','grovveip4213412341234@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor SP',NULL,NULL,'2'),(46,'kariako Jose Mendez Quintero','kariako.mendez@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor SP',NULL,NULL,'3'),(47,'Jorge Restrepo','joge@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor SP',NULL,NULL,'4'),(48,'patricia del carmen','psti@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor SP',NULL,NULL,'5'),(49,'Cristian Jose Quintero Mendez','cristian@usa.edu.co','827ccb0eea8a706c4c34a16891f84e7b','pic.png','Tutor SP',NULL,NULL,'6');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -672,4 +676,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-22 17:09:18
+-- Dump completed on 2023-01-15 18:41:10

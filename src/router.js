@@ -108,6 +108,11 @@ export default new Router({
                     path: '/tutor/mis-asignaciones',
                     component: () => import('@/views/tutor/misAsignaciones'),
                 },
+                {
+                    name: 'ObervacionesTutor',
+                    path: '/tutor/mis-observaciones',
+                    component: () => import('@/views/tutor/misObservaciones'),
+                },
             ]
         },
     ],

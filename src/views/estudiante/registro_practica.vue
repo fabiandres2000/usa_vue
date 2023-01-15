@@ -177,7 +177,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-lg-6">
-                            <button style="width: 100%" type="submit" class="btn btn-primary"><i class="fa-solid fa-comment"></i> Observaciones </button>
+                            <a @click="mis_observaciones()" style="width: 100%; color: white;" type="button" class="btn btn-primary"><i class="fa-solid fa-comment"></i> Observaciones </a>
                         </div>
                         <div class="col-lg-6 text-center">
                             <button style="width: 100%" type="submit" class="btn btn-warning"><i class="fa-solid fa-floppy-disk"></i> Guardar </button>
@@ -188,6 +188,82 @@
           </v-card>
         </v-col>
       </v-row>
+
+        <b-modal
+            ref="modalObservaciones"
+            hide-footer
+            title="Observaciones Recibidas"
+            size="xl"
+            centered
+            header-bg-variant="warning"
+            header-text-variant="light"
+            :no-close-on-backdrop="true"
+            >
+                <table id="table_observaciones_e" style="width: 100% !important;">
+                    <thead>
+                        <tr>
+                        
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Tutor</th>
+                            <th>Observaciones</th>
+                            <th>Tipo Observación</th>
+                            <th>Documento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in observaciones" :key="index">
+                            <td style="text-align: center;">{{item.fecha_observacion}}</td>
+                            <td style="text-align: center;">{{item.hora_observacion}}</td>
+                            <td style="text-align: center;">{{item.tutor.nombres}} {{item.tutor.apellidos}}</td>
+                            <td style="text-align: center;">{{item.observaciones}}</td>
+                            <td style="text-align: center;">{{item.tipo}}</td>
+                            <td style="text-align: center;"> 
+                                <button @click="mostrarPDF(item.archivo)" class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <hr />
+            <div class="text-right">
+                <button
+                type="button"
+                class="btn btn-danger"
+                @click="cerrarModal"
+                >
+                <i class="fa fa-window-close"></i> Cancelar
+                </button>
+            </div>
+        </b-modal>
+
+        <b-modal
+            ref="modalpdf"
+            hide-footer
+            title="Documento con Correcciones"
+            size="xl"
+            centered
+            header-bg-variant="warning"
+            header-text-variant="light"
+            :no-close-on-backdrop="true"
+            >
+            <embed
+                id="divPdf"
+                :src="rutaPdf"
+                type="application/pdf"
+                width="100%"
+                height="650px"
+            />
+            <hr />
+            <div class="text-right">
+                <button
+                type="button"
+                class="btn btn-danger"
+                @click="cerrarModalpdf"
+                >
+                <i class="fa fa-window-close"></i> Cancelar
+                </button>
+            </div>
+        </b-modal>
     </v-container>
   </template>
   
@@ -195,6 +271,10 @@
   import * as estudianteService from "../../servicios/estudiante_service"
   import * as practicasService from "../../servicios/practicas"
   import store from "../../store";
+  import "jquery/dist/jquery.min.js";
+  import "datatables.net-dt/js/dataTables.dataTables";
+  import "datatables.net-dt/css/jquery.dataTables.min.css";
+  import $ from "jquery";
 
   export default {
     name: "Profile",
@@ -215,6 +295,8 @@
             proyecto: ""
         },
         ruta: "",
+        observaciones: [],
+        rutaPdf: ""
     }),
     components: {},
     mounted() {
@@ -346,7 +428,52 @@
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
-        }
+        },
+        async mis_observaciones(){
+            await estudianteService.mis_observaciones(this.id_estudiante).then(respuesta => {
+                this.observaciones = respuesta.data.observaciones;
+                this.$refs.modalObservaciones.show(); 
+                this.crearDataTable();
+            });
+        },
+        cerrarModal(){
+            this.$refs.modalObservaciones.hide();
+        },
+        mostrarPDF(ruta){
+            this.rutaPdf = store.state.apiURL+"archivos_observacion/"+ ruta;
+            this.$refs.modalpdf.show(); 
+        },
+        crearDataTable() {
+            $("#table_observaciones_e").dataTable().fnDestroy();
+            setTimeout(() => {
+                $('#table_observaciones_e').DataTable({
+                "ordering": true,
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Registros",
+                    "infoFiltered": "(Filtrado de _MAX_ total Registros)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Registros",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+                });
+            }, 100);
+        },
+        cerrarModalpdf(){
+            this.$refs.modalpdf.hide();
+        },
     },
   };
 </script>
@@ -354,6 +481,29 @@
     label{
         color: #2c4a73;
         font-weight: bold;
+    }
+
+    #table_observaciones_e {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #table_observaciones_e td, #table_observaciones_e th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #table_observaciones_e tr:nth-child(even){background-color: #f2f2f2;}
+
+    #table_observaciones_e tr:hover {background-color: #ddd;}
+
+    #table_observaciones_e th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: #2C4A73;
+        color: white;
     }
 </style>
   

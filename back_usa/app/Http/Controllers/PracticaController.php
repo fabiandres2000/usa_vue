@@ -980,4 +980,91 @@ class PracticaController extends Controller
             'asignaciones' => $asignaciones,
         ]);
     }
+
+    public function registrar_observacion(){
+        $data = request()->all();
+
+        $documento_tmp1 = $data['file_obs']; 
+        $filename = 'observacion_' . date('Y_m_d_h_i_s_A').".".$documento_tmp1->getClientOriginalExtension();  
+    
+
+        $insert = DB::connection("mysql")
+        ->table("observacion")
+        ->insert([
+            'id_practica' => $data["id_practica"],
+            'observaciones' => $data["observaciones"],
+            'archivo'=> $filename,
+            'fecha_observacion'=> date('d-m-Y'),
+            'hora_observacion'=> date('h:i:s'),
+            'id_tutor'=> $data["id_tutor"],
+            'tipo'=> $data["tipo"],
+            'tipo_obs'=> $data["tipo_obs"],
+        ]);
+
+        if($insert){
+
+            $documento_tmp1->move(public_path().'/archivos_observacion/', $filename);
+           
+            return response()->json([
+                'respuesta' => "Observación Registrada Correctamente!",
+                'codigo' => 1,
+            ]);
+
+        }else{
+            return response()->json([
+                'respuesta' => "Ocurrio un error, intente mas tarde.",
+                'codigo' => 0,
+            ]);
+        }
+
+    }
+
+    public function mis_observaciones_tutor(){
+        $data = request()->all();
+        $observaciones = DB::connection("mysql")
+        ->table("observacion")
+        ->join("practica","practica.id","observacion.id_practica")
+        ->join("estudiante","estudiante.id","practica.id_estudiante")
+        ->where("observacion.id_tutor", $data["id"])
+        ->where("observacion.tipo", $data["tipo"])
+        ->select("estudiante.cedula","estudiante.nombre","practica.tema","observacion.*")
+        ->get();
+
+        return response()->json([
+            'observaciones' => $observaciones,
+        ]);
+    }
+
+
+    public function mis_observaciones_estudiante(){
+        $data = request()->all();
+
+        $observaciones = DB::connection("mysql")
+        ->table("observacion")
+        ->join("practica","practica.id","observacion.id_practica")
+        ->join("estudiante","estudiante.id","practica.id_estudiante")
+        ->where("estudiante.id", $data["id"])
+        ->select("observacion.*")
+        ->get();
+
+        foreach ($observaciones as $key) {
+            if($key->tipo == "USA"){
+                $key->tutor = DB::connection("mysql")
+                ->table("tutor_usa")
+                ->where("tutor_usa.id", $key->id_tutor)
+                ->select("*")
+                ->first();
+            }else{
+                $key->tutor = DB::connection("mysql")
+                ->table("tutor_sp")
+                ->where("tutor_sp.id", $key->id_tutor)
+                ->select("*")
+                ->first();
+            }
+        }
+
+        return response()->json([
+            'observaciones' => $observaciones,
+        ]);
+    }
 }

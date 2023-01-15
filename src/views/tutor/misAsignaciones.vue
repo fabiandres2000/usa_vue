@@ -37,14 +37,14 @@
                                 </td>
                                 <td style="text-align: center;">
                                     <div v-if="item.practica != null && item.practica.instrumento != 'Ninguno'">
-                                        <button @click="mostrarPDF(item.practica.excel_1)" class="btn btn-warning"><i class="fa-solid fa-file-excel"></i></button>
+                                        <button @click="downloadExel(item.practica.excel_1)" class="btn btn-success"><i class="fa-solid fa-file-excel"></i></button>
                                     </div>
                                     <p v-if="item.practica != null && item.practica.instrumento == 'Ninguno'">Ninguno</p>
                                     <p v-if="item.practica == null">No ha cargado la información</p>
                                 </td>
                                 <td style="text-align: center;">
                                     <div v-if="item.practica != null && item.practica.instrumento_2 != 'Ninguno'">
-                                        <button @click="mostrarPDF(item.practica.excel_2)" class="btn btn-warning"><i class="fa-solid fa-file-excel"></i></button>
+                                        <button @click="downloadExel(item.practica.excel_2)" class="btn btn-success"><i class="fa-solid fa-file-excel"></i></button>
                                     </div>
                                     <p v-if="item.practica != null && item.practica.instrumento_2 == 'Ninguno'">Ninguno</p>
                                     <p v-if="item.practica == null">No ha cargado la información</p>
@@ -103,25 +103,24 @@
             <div class="col-lg-12">
                 <h3>{{practica_editar.practica.tema}}</h3>
             </div>
-            <form style="padding-left: 25px">
+            <form @submit.prevent="registrar_observacion" method="post" ref="form_robs"  style="padding-left: 25px">
                 <div class="col-lg-12">
-                    <input class="form-control" type="hidden" v-model="practica_editar.practica.id">
+                    <input class="form-control" name="id_practica" type="hidden" v-model="practica_editar.practica.id">
                 </div>
                 <div class="col-lg-12">
                     <label for="file_obs">Archivo con correcciones</label>
-                    <input class="form-control" id="file_obs" type="file">
+                    <input required class="form-control"  accept=".pdf" name="file_obs" type="file">
                 </div>
                 <div class="col-lg-12">
                     <label for="file_obs">Archivo con correcciones</label>
-                    <textarea class="form-control" id="observaciones" rows="6" cols="100"></textarea>
+                    <textarea required class="form-control" name="observaciones" rows="6" cols="100"></textarea>
                 </div>
                 <hr />
                 <div class="col-lg-12 text-right">
                     <button
-                    type="button"
-                    class="btn btn-success"
-                    @click="cerrarModal"
-                    style="margin-right: 10px"
+                        type="submit"
+                        class="btn btn-success"
+                        style="margin-right: 10px"
                     >
                     <i class="fa fa-save"></i> Guardar
                     </button>
@@ -159,16 +158,22 @@ export default {
                     id: 0,
                     tema: ""
                 }
-            }
+            }, 
+            tipo_obs: "",
+            abrev: ""
         }
     },
     mounted() {
         if(this.$session.get("tipo") == "Tutor SP"){
             this.id_tutor = this.$session.get("id_tutor_sp");
             this.tipo_consulta = 1;
+            this.tipo_obs = "Tutor Sitio de Practica";
+            this.abrev = "SP"
         }else{
             this.id_tutor = this.$session.get("id_tutor_usa");
             this.tipo_consulta = 2;
+            this.tipo_obs = "Tutor Universidad Sergio Arboleda";
+            this.abrev = "USA"
         }
       this.mis_asignaciones();
     },
@@ -209,8 +214,7 @@ export default {
         },
         mostrarPDF(ruta){
             this.rutaPdf = store.state.apiURL+"archivos_practica/"+ ruta;
-            this.$refs.modalpdf.show();
-           
+            this.$refs.modalpdf.show(); 
         },
         cerrarModal(){
             this.$refs.modalpdf.hide();
@@ -219,6 +223,34 @@ export default {
         mostrarModalObservacion(item){
             this.practica_editar = item;
             this.$refs.modalobservacion.show();
+        },
+        downloadExel(ruta){
+            var label = ruta;
+            var url = store.state.apiURL+"archivos_practica/"+ ruta;
+            const link = document.createElement('a')
+            link.setAttribute('download', label);
+            link.href = url
+            link.click()
+        },
+        async registrar_observacion(){
+            const formData = new FormData(this.$refs['form_robs']); 
+            const data = {};
+            for (let [key, val] of formData.entries()) {
+                Object.assign(data, { [key]: val })
+            }
+
+            Object.assign(data, { 'tipo_obs': this.tipo_obs })
+            Object.assign(data, { 'id_tutor': this.id_tutor })
+            Object.assign(data, { 'tipo': this.abrev })
+            
+            await tutorService.registrar_observacion(data).then(respuesta => {
+              if(respuesta.data.codigo == 1){
+                this.$swal('Correcto...', respuesta.data.respuesta, 'success');
+                this.cerrarModal();
+              }else{
+                this.$swal('Error...', respuesta.data.respuesta, 'error');
+              }
+          });
         }
     }, 
 }

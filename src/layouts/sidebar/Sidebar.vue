@@ -142,7 +142,11 @@ export default {
         icon: "fa-solid fa-people-arrows",
         href: "/tutor/mis-asignaciones"
       },
-      
+      {
+        title: "Observaciones",
+        icon: "fa-solid fa-comments",
+        href: "/tutor/mis-observaciones"
+      },
     ],
     imagen: "pic.png",
     nombre: "",

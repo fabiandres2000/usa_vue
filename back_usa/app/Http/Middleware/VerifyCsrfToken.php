@@ -27,6 +27,7 @@ class VerifyCsrfToken extends Middleware
         '/registrar-practica',
         '/editar-practica',
         '/guardar-sociodemografico',
-        '/guardar-respuesta-personalidad'
+        '/guardar-respuesta-personalidad',
+        '/registrar-observacion'
     ];
 }

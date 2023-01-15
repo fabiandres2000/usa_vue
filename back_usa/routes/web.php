@@ -62,3 +62,6 @@ Route::get('/detalle-personalidad', [EstudianteController::class, 'detalle_perso
 Route::get('/listar-estudiantes-personalidad', [EstudianteController::class, 'listar_estudiantes_personalidad']);
 
 Route::get('/tutor/mis-asignaciones', [PracticaController::class, 'mis_asignaciones']);
+Route::post('/registrar-observacion', [PracticaController::class, 'registrar_observacion']);
+Route::get('/tutor/mis-observaciones', [PracticaController::class, 'mis_observaciones_tutor']);
+Route::get('/estudiante/mis-observaciones', [PracticaController::class, 'mis_observaciones_estudiante']);

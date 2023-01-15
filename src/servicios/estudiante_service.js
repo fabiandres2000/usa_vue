@@ -75,3 +75,7 @@ export function calificar_personalidad($id) {
 export function detalle_personalidad($id) {
     return http().get('/detalle-personalidad?id='+$id);
 }
+
+export function mis_observaciones($id) {
+    return http().get('/estudiante/mis-observaciones?id='+$id);
+}
